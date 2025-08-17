@@ -1,0 +1,17 @@
+span {
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+span::before {
+  content: "";
+  height: 10%;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  transition: 0.1s ease;
+}
+span:hover::before {
+  height: 100%;
+  opacity: 0.3;
+}

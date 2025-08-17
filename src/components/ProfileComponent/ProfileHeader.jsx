@@ -1,0 +1,188 @@
+import Logo from "../../assets/logo";
+import "../../App.css";
+import {
+  Settings,
+  EllipsisVertical,
+  Dot,
+  ArrowLeft,
+  LogOut,
+  User,
+} from "lucide-react";
+import { useState, useRef, useEffect } from "react";
+import { useMedia } from "../../Context/ResponsiveContext";
+import { useAuth } from "../../Context/AuthContext";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import toast from "react-hot-toast";
+import TimelineFeed from "./TimelineFeed";
+
+const ProfileComponent = ({ profile, isCurrentUser, projects }) => {
+  const { logout } = useAuth();
+  const navigate = useNavigate();
+  const isMobileSize = useMedia();
+  const [isElipsDialogOpen, setIsElipsDialogOpen] = useState(false);
+  const menuRef = useRef(null);
+  const { id } = useParams();
+
+  const handleLogout = async () => {
+    await logout();
+    navigate("/login");
+    toast.success("Logout successfully");
+  };
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setIsElipsDialogOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  return (
+    <div className="w-3xl mx-auto bg-black rounded-lg overflow-hidden shadow-lg">
+      {/* Header */}
+      {isMobileSize && history.length > 0 && (
+        <nav
+          className={`sticky top-0 flex items-center h-15 w-full backdrop-blur-lg bg-black/20 rounded-xl p-6`}
+        >
+          <ArrowLeft
+            size={28}
+            color="#fff"
+            className="cursor-pointer"
+            onClick={() => window.history.back()}
+          />
+        </nav>
+      )}
+      <div className={`bg-black ${isMobileSize ? "py-5 px-5" : "py-10"}`}>
+        <div className="flex justify-between items-center">
+          <div className="flex items-center space-x-4 ">
+            <div className="w-25 h-25 rounded-full shadow-md overflow-hidden bg-gradient-to-l from-pink-600 via-red-500 to-orange-400 p-1">
+              <img
+                src={profile?.user?.avatar}
+                alt="Profile"
+                className="w-full h-full object-cover rounded-full"
+              />
+            </div>
+            <div>
+              <h1 className="text-3xl font-bold text-white">
+                {profile?.user?.name}
+              </h1>
+              <p className="text-white opacity-90">Devloper</p>
+            </div>
+          </div>
+
+          {/* Ellips Button / Dropdown */}
+
+          <div className="relative" ref={menuRef}>
+            <button
+              className="text-white hover:text-gray-200 cursor-pointer"
+              onClick={() => setIsElipsDialogOpen((prev) => !prev)}
+            >
+              <EllipsisVertical size={24} />
+            </button>
+
+            {/* Dropdown Panel (below the three dots) */}
+            {isElipsDialogOpen && (
+              <div className="absolute right-0 mt-2 bg-neutral-700 rounded-xl shadow-lg w-44 py-2 z-50">
+                <ul className="flex flex-col text-sm">
+                  <li>
+                    <button className="flex items-center gap-2 px-4 py-2 w-full text-left hover:bg-neutral-500">
+                      <Settings size={16} /> Settings
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      onClick={handleLogout}
+                      className="flex items-center gap-2 px-4 py-2 w-full text-left text-red-400 font-bold hover:bg-neutral-500"
+                    >
+                      <LogOut size={16} /> Logout
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Profile Info */}
+      <div className="p-5">
+        <div className="flex justify-between m-5">
+          <div className="text-center">
+            <p className="text-2xl font-bold">
+              {profile?.user?.projects?.length || 0}
+            </p>
+            <p className="text-gray-500">posts</p>
+          </div>
+          <div className="text-center">
+            <p className="text-2xl font-bold">{0}</p>
+            <p className="text-gray-500">followers</p>
+          </div>
+          <div className="text-center">
+            <p className="text-2xl font-bold">{0}</p>
+            <p className="text-gray-500">following</p>
+          </div>
+        </div>
+
+        <div className="mb-6">
+          <h2 className="text-xl font-bold text-neutral-300 mb-1">
+            @{profile?.user?.username}
+          </h2>
+          {profile?.user?.bio && (
+            <p className="text-neutral-300 mb-2">{profile?.user?.bio}</p>
+          )}
+          <div>
+            {profile?.user?.address && (
+              <p className="font-medium flex">
+                From <Dot /> {profile?.user?.address}
+              </p>
+            )}
+            {profile?.user?.phone && (
+              <p className="font-medium flex">
+                Contact <Dot /> {profile?.user?.phone}
+              </p>
+            )}
+            {profile?.user?.skills.length > 0 && (
+              <div className="font-medium flex gap-3">
+                Skills <Dot />
+                {profile?.user?.skills.map((skill, i) => (
+                  <p key={i} className="font-medium">
+                    {skill}
+                  </p>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div>
+          {isCurrentUser ? (
+            <div className="flex space-x-4 mb-6">
+              <button
+                onClick={() => navigate(`/edit-profile`)}
+                className="flex-1 bg-gradient-to-l from-pink-600 via-red-500 to-orange-400 p-1 text-white py-2 px-4 rounded-lg font-medium hover:opacity-90 transition text-center cursor-pointer"
+              >
+                Edit profile
+              </button>
+              <button className="flex-1 bg-gray-100 text-gray-800 py-2 px-4 rounded-lg font-medium hover:bg-gray-200 transition text-center">
+                View archive
+              </button>
+            </div>
+          ) : (
+            <div className="flex space-x-4 mb-6">
+              <button className="flex-1 bg-gradient-to-l from-pink-600 via-red-500 to-orange-400 p-1 text-white py-2 px-4 rounded-lg font-medium hover:opacity-90 transition">
+                Follow
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+      {/* Feed section */}
+      <TimelineFeed projects={projects} />
+    </div>
+  );
+};
+
+export default ProfileComponent;
