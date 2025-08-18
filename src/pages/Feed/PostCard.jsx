@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { Heart, X, ChevronLeft, ChevronRight, Dot } from "lucide-react";
+import { Heart, X, ChevronLeft, ChevronRight, Dot, Earth } from "lucide-react";
 import { timeAgo } from "../../utils/timeAgo";
 import { usePosts } from "../../Context/PostContext";
 import { useAuth } from "../../Context/AuthContext";
 import { Link } from "react-router-dom";
+import { GiEarthAsiaOceania } from "react-icons/gi";
 
 export default function PostCard({ post }) {
   const { toggleLike } = usePosts();
@@ -47,6 +48,12 @@ export default function PostCard({ post }) {
             <Dot />
             {timeAgo(post?.createdAt)}
           </p>
+          <span
+            className="flex items-center p-5 text-neutral-500"
+            title="Public"
+          >
+            <GiEarthAsiaOceania size={15} />
+          </span>
         </Link>
       </div>
 

@@ -144,8 +144,9 @@ const ProfileComponent = ({ profile, isCurrentUser, projects }) => {
               </p>
             )}
             {profile?.user?.skills?.length > 0 && (
-              <div className="font-medium flex gap-3">
-                Skills <Dot />
+              <div className="font-medium flex">
+                Skills
+                <Dot />
                 <p className="font-medium">{profile.user.skills.join(", ")}</p>
               </div>
             )}
@@ -160,7 +161,7 @@ const ProfileComponent = ({ profile, isCurrentUser, projects }) => {
                         href={`https://${url}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-blue-500 underline"
+                        className="text-blue-500"
                       >
                         {url}
                       </a>

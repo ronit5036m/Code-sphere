@@ -2,6 +2,8 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { Heart, X, ChevronLeft, ChevronRight, Dot } from "lucide-react";
 import { timeAgo } from "../../utils/timeAgo";
+import { BiLock } from "react-icons/bi";
+import { GiEarthAsiaOceania } from "react-icons/gi";
 
 const ProfileTimeLine = ({ post }) => {
   const [showModal, setShowModal] = useState(false);
@@ -42,6 +44,18 @@ const ProfileTimeLine = ({ post }) => {
             <Dot />
             {timeAgo(post?.project?.createdAt)}
           </p>
+          <span
+            className="px-5 text-neutral-500"
+            title={
+              `${post?.project?.isGlobalPost ? "Public" : "Private"}` || ""
+            }
+          >
+            {post?.project?.isGlobalPost ? (
+              <GiEarthAsiaOceania size={17} />
+            ) : (
+              <BiLock size={17} />
+            )}
+          </span>
         </Link>
       </div>
 

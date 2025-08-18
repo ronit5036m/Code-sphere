@@ -28,16 +28,16 @@ const EditprofileComponent = () => {
   useEffect(() => {
     if (CurrentUser?.existuser) {
       setFormData({
-        name: CurrentUser.existuser.name || "",
-        phone: CurrentUser.existuser.phone || "",
-        address: CurrentUser.existuser.address || "",
-        github: CurrentUser.existuser.links.github || "",
-        bio: CurrentUser.existuser.bio || "",
-        twitter: CurrentUser.existuser.links.twitter || "",
-        instagram: CurrentUser.existuser.links.instagram || "",
-        facebook: CurrentUser.existuser.links.facebook || "",
-        skills: CurrentUser.existuser.skills || "",
-        avatar: CurrentUser.existuser.avatar || null,
+        name: CurrentUser?.existuser?.name || "",
+        phone: CurrentUser?.existuser?.phone || "",
+        address: CurrentUser?.existuser?.address || "",
+        github: CurrentUser?.existuser?.links?.github || "",
+        bio: CurrentUser?.existuser?.bio || "",
+        twitter: CurrentUser?.existuser?.links?.twitter || "",
+        instagram: CurrentUser?.existuser?.links?.instagram || "",
+        facebook: CurrentUser?.existuser?.links?.facebook || "",
+        skills: CurrentUser?.existuser?.skills || "",
+        avatar: CurrentUser?.existuser?.avatar || null,
       });
     }
   }, [CurrentUser]);

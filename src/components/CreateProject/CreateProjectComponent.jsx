@@ -4,10 +4,11 @@ import { useAuth } from "../../Context/AuthContext";
 import { useMedia } from "../../Context/ResponsiveContext";
 import { ArrowLeft } from "lucide-react";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const CreateProjectComponent = () => {
   const { authToken } = useAuth();
-
+  const navigate = useNavigate();
   const isMobileSize = useMedia();
   const [loading, setLoading] = useState(false);
 
@@ -84,6 +85,7 @@ const CreateProjectComponent = () => {
         isGlobalPost: false,
         images: [],
       });
+      navigate("/");
     } catch (err) {
       toast.error("Something went wrong. Try again.");
     } finally {
@@ -93,7 +95,7 @@ const CreateProjectComponent = () => {
 
   return (
     <div
-      className={`min-h-screen bg-black text-white flex items-center justify-center flex-col ${
+      className={`min-h-screen bg-black text-white flex items-center flex-col ${
         isMobileSize ? "px-6" : "p-6"
       }`}
     >
@@ -216,11 +218,10 @@ const CreateProjectComponent = () => {
           <button
             type="submit"
             className={`w-full p-3 bg-gradient-to-l from-pink-600 via-red-500 to-orange-400 rounded-lg font-semibold hover:opacity-90 ${
-              loading ? "opacity-60" : "opacity-100"
+              loading && "opacity-60"
             }`}
             disabled={loading}
           >
-            Post Project
             {loading ? "Posting..." : "Post Project"}
           </button>
         </form>
