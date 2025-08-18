@@ -21,7 +21,6 @@ const ProfileComponent = ({ profile, isCurrentUser, projects }) => {
   const isMobileSize = useMedia();
   const [isElipsDialogOpen, setIsElipsDialogOpen] = useState(false);
   const menuRef = useRef(null);
-  const { id } = useParams();
 
   const handleLogout = async () => {
     await logout();
@@ -144,14 +143,30 @@ const ProfileComponent = ({ profile, isCurrentUser, projects }) => {
                 Contact <Dot /> {profile?.user?.phone}
               </p>
             )}
-            {profile?.user?.skills.length > 0 && (
+            {profile?.user?.skills?.length > 0 && (
               <div className="font-medium flex gap-3">
                 Skills <Dot />
-                {profile?.user?.skills.map((skill, i) => (
-                  <p key={i} className="font-medium">
-                    {skill}
-                  </p>
-                ))}
+                <p className="font-medium">{profile.user.skills.join(", ")}</p>
+              </div>
+            )}
+
+            {profile?.user?.links && (
+              <div className="font-medium gap-3">
+                {Object.entries(profile?.user?.links).map(
+                  ([platform, url], i) => (
+                    <p key={i} className="font-medium">
+                      {platform} :{" "}
+                      <a
+                        href={`https://${url}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-500 underline"
+                      >
+                        {url}
+                      </a>
+                    </p>
+                  )
+                )}
               </div>
             )}
           </div>

@@ -84,7 +84,7 @@ const EditprofileComponent = () => {
     >
       {isMobileSize && history.length > 0 && (
         <nav
-          className={`sticky top-0 flex items-center h-15 w-full backdrop-blur-lg bg-black/20 rounded-xl px-1`}
+          className={`sticky top-0 flex items-center h-15 w-full backdrop-blur-lg bg-black/20 rounded-xl px-1 z-999`}
         >
           <ArrowLeft
             size={28}
@@ -112,7 +112,7 @@ const EditprofileComponent = () => {
                       : URL.createObjectURL(formData.avatar)
                   }
                   alt="Preview"
-                  className="w-32 h-32 rounded-full object-cover"
+                  className="w-32 h-32 rounded-full object-cover hover:opacity-80 transition-opacity"
                 />
               ) : (
                 <span className="text-gray-400">
@@ -222,7 +222,7 @@ const EditprofileComponent = () => {
             }`}
             disabled={loading}
           >
-            {loading ? "Loading..." : "Save Changes"}
+            {loading ? "Saving..." : "Save Changes"}
           </button>
         </form>
       </div>

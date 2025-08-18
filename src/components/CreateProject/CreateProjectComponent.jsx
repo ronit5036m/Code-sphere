@@ -122,7 +122,7 @@ const CreateProjectComponent = () => {
             placeholder="Project Title"
             value={formData.title}
             onChange={handleChange}
-            className="w-full p-3 rounded-lg bg-neutral-800 text-white placeholder-gray-400 outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full p-3 rounded-lg bg-neutral-800 text-white placeholder-neutral-400 outline-none focus:ring-2 focus:ring-blue-500"
             required
           />
 
@@ -132,7 +132,7 @@ const CreateProjectComponent = () => {
             placeholder="Project Description"
             value={formData.description}
             onChange={handleChange}
-            className="w-full p-3 rounded-lg bg-neutral-800 text-white placeholder-gray-400 outline-none focus:ring-2 focus:ring-blue-500 h-28 resize-none"
+            className="w-full p-3 rounded-lg bg-neutral-800 text-white placeholder-neutral-400 outline-none focus:ring-2 focus:ring-blue-500 h-28 resize-none"
             required
           />
 
@@ -143,7 +143,7 @@ const CreateProjectComponent = () => {
             placeholder="Tech Stack (comma separated)"
             value={formData.techStack}
             onChange={handleChange}
-            className="w-full p-3 rounded-lg bg-neutral-800 text-white placeholder-gray-400 outline-none focus:ring-2 focus:ring-green-500"
+            className="w-full p-3 rounded-lg bg-neutral-800 text-white placeholder-neutral-400 outline-none focus:ring-2 focus:ring-green-500"
           />
 
           {/* Project Link */}
@@ -153,7 +153,7 @@ const CreateProjectComponent = () => {
             placeholder="Project Link (GitHub/Live)"
             value={formData.projectLink}
             onChange={handleChange}
-            className="w-full p-3 rounded-lg bg-neutral-800 text-white placeholder-gray-400 outline-none focus:ring-2 focus:ring-purple-500"
+            className="w-full p-3 rounded-lg bg-neutral-800 text-white placeholder-neutral-400 outline-none focus:ring-2 focus:ring-purple-500"
           />
 
           {/* Global Post Toggle */}
@@ -165,7 +165,7 @@ const CreateProjectComponent = () => {
               className={`w-14 h-7 flex items-center rounded-full p-1 transition ${
                 formData.isGlobalPost
                   ? "bg-gradient-to-l from-pink-600 via-red-500 to-orange-400"
-                  : "bg-gray-600"
+                  : "bg-neutral-600"
               }`}
             >
               <div
@@ -215,9 +215,13 @@ const CreateProjectComponent = () => {
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full p-3 bg-gradient-to-l from-pink-600 via-red-500 to-orange-400 rounded-lg font-semibold hover:opacity-90"
+            className={`w-full p-3 bg-gradient-to-l from-pink-600 via-red-500 to-orange-400 rounded-lg font-semibold hover:opacity-90 ${
+              loading ? "opacity-60" : "opacity-100"
+            }`}
+            disabled={loading}
           >
             Post Project
+            {loading ? "Posting..." : "Post Project"}
           </button>
         </form>
       </div>
