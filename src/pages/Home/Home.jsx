@@ -1,17 +1,13 @@
-import { useEffect } from "react";
-import "../../pages/Home/Home.css";
 import PostFeed from "../Feed/PostFeed";
 import { usePosts } from "../../Context/PostContext";
-
 import { useAuth } from "../../Context/AuthContext";
-
 import AppLoading from "../../components/Loading/Loading";
 import { useMedia } from "../../Context/ResponsiveContext";
-
 import { DesktopSidebar } from "../../components/SidebottomBars/DesktopSidebar";
 import MobileBottombar from "../../components/SidebottomBars/MobileBottombar";
 import RightSideUserDetails from "../../components/RightSideUserDetails/RightSideUserDetails";
 import Header from "../../components/Header/Header";
+import "../../pages/Home/Home.css";
 import Footer from "../../components/Footer/Footer";
 
 const Home = () => {
@@ -31,6 +27,11 @@ const Home = () => {
         <PostFeed />
         {!isMobileSize && <RightSideUserDetails />}
       </div>
+      {isMobileSize && (
+        <div className="w-full flex justify-center items-center p-10">
+          <Footer />
+        </div>
+      )}
     </>
   );
 };

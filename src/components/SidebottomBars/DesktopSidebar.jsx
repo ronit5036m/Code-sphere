@@ -5,6 +5,7 @@ import { useAuth } from "../../Context/AuthContext";
 import { Search, Heart, PlusSquare, Menu, HomeIcon, Send } from "lucide-react";
 import Logo from "../../assets/logo";
 import MoreMenu from "../MoreComponent/More";
+import Footer from "../Footer/Footer";
 
 export const DesktopSidebar = () => {
   const [isMoreClicked, setIsMoreClicked] = useState(false);
@@ -162,6 +163,9 @@ export const DesktopSidebar = () => {
             <div>More</div>
           </NavLink>
         </nav>
+        <div className="w-full flex justify-center items-center">
+          <Footer />
+        </div>
       </aside>
     </>
   );

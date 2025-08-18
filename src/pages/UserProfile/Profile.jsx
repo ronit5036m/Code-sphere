@@ -1,19 +1,15 @@
-// pages/ProfilePage.jsx
 import { useParams } from "react-router-dom";
 import { useAuth } from "../../Context/AuthContext";
 import { useEffect, useState } from "react";
 import axiosInstance from "../../api/axiosInstance";
-import Logo from "../../assets/logo";
 import AppLoading from "../../components/Loading/Loading";
 import MobileBottombar from "../../components/SidebottomBars/MobileBottombar";
 import { DesktopSidebar } from "../../components/SidebottomBars/DesktopSidebar";
 import { useMedia } from "../../Context/ResponsiveContext";
-import ProfilePost from "../../components/ProfileComponent/ProfileTimeLine";
-import TimelineFeed from "../../components/ProfileComponent/TimelineFeed";
 import ProfileComponent from "../../components/ProfileComponent/ProfileHeader";
-
 import Errorpage from "../Error/Errorpage";
 import { usePosts } from "../../Context/PostContext";
+import Footer from "../../components/Footer/Footer";
 
 const ProfilePage = () => {
   const { id } = useParams();
@@ -28,11 +24,8 @@ const ProfilePage = () => {
     const fetchProfile = async () => {
       try {
         setLoading(true);
-        // const res = await axiosInstance.get(`/api/user/${id}`, {
-        //   headers: { Authorization: `Bearer ${authToken}` },
-        // });
         const res = await axiosInstance.get(`/api/user/${id}`, {
-          headers: { Authorization: authToken },
+          headers: { Authorization: `Bearer ${authToken}` },
         });
         setLoading(false);
 
@@ -54,14 +47,9 @@ const ProfilePage = () => {
     };
 
     const fetchProjects = async (projectIds) => {
-      // const projectPromises = projectIds.map((id) =>
-      //   axiosInstance.get(`/api/project/${id}`, {
-      //     headers: { Authorization: `Bearer ${authToken}` },
-      //   })
-      // );
       const projectPromises = projectIds.map((id) =>
         axiosInstance.get(`/api/project/${id}`, {
-          headers: { Authorization: authToken },
+          headers: { Authorization: `Bearer ${authToken}` },
         })
       );
 
@@ -88,14 +76,21 @@ const ProfilePage = () => {
   const isCurrentUser = CurrentUser?.existuser?._id === profile?.user?._id;
 
   return (
-    <div className="flex min-h-screen bg-black text-white">
-      {isMobileSize ? <MobileBottombar /> : <DesktopSidebar />}
-      <ProfileComponent
-        profile={profile}
-        isCurrentUser={isCurrentUser}
-        projects={projects}
-      />
-    </div>
+    <>
+      <div className="flex min-h-screen bg-black text-white">
+        {isMobileSize ? <MobileBottombar /> : <DesktopSidebar />}
+        <ProfileComponent
+          profile={profile}
+          isCurrentUser={isCurrentUser}
+          projects={projects}
+        />
+      </div>
+      {isMobileSize && (
+        <div className="w-full flex justify-center items-center p-10">
+          <Footer />
+        </div>
+      )}
+    </>
   );
 };
 

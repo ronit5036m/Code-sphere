@@ -1,41 +1,41 @@
 import React from "react";
 import DarkCard from "../Cards/DarkCard";
-
+import Logo from "../../assets/logo";
 function Landing3() {
   const features = [
     {
       title: "Visual Projects",
       description:
         "Showcase your best creative work in a stunning, scrollable gallery",
-      imageSrc: "./src/assets/image8.jpg",
+      imageSrc: `${Logo.image8}`,
       alt: "Visual gallery of creative work",
     },
     {
       title: "Project Showcasing",
       description:
         "Highlight your latest projects with detailed case studies and behind-the-scenes insights",
-      imageSrc: "./src/assets/image5.jpg",
+      imageSrc: `${Logo.image5}`,
       alt: "Project case studies",
     },
     {
       title: "Community Chatrooms",
       description:
         "Connect, collaborate, and chat in real-time with like-minded creators.",
-      imageSrc: "./src/assets/image7.jpg",
+      imageSrc: `${Logo.image7}`,
       alt: "Chat interface",
     },
     {
       title: "Search & Discover",
       description:
         "Explore trending work, rising talent, and hidden gems through powerful discovery tools.",
-      imageSrc: "./src/assets/image8.jpg",
+      imageSrc: `${Logo.image8}`,
       alt: "Search feed",
     },
     {
       title: "Public Profiles",
       description:
         "Build a personal brand with a customizable profile that tells your creative story.",
-      imageSrc: "./src/assets/image8.jpg",
+      imageSrc: `${Logo.image8}`,
       alt: "User profile",
     },
   ];

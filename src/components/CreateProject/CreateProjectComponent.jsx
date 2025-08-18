@@ -69,15 +69,9 @@ const CreateProjectComponent = () => {
         data.append("images", file);
       });
       setLoading(true);
-      // await axiosInstance.post("/api/project", data, {
-      //   headers: {
-      //     Authorization: `Bearer ${authToken}`,
-      //     "Content-Type": "multipart/form-data",
-      //   },
-      // });
       await axiosInstance.post("/api/project", data, {
         headers: {
-          Authorization: authToken,
+          Authorization: `Bearer ${authToken}`,
           "Content-Type": "multipart/form-data",
         },
       });

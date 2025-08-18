@@ -1,5 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
+
+import Logo from "../../assets/logo";
+
 function Landing1() {
   return (
     <main className="pt-16 pb-12 bg-black/90">
@@ -27,7 +30,7 @@ function Landing1() {
       <div className="flex justify-center">
         <img
           className="rounded-2xl shadow-xl w-[800px] max-w-full border border-gray-800"
-          src="./src/assets/code.png"
+          src={Logo.code}
           alt="main code image"
         />
       </div>

@@ -1,4 +1,3 @@
-import React from "react";
 
 const DarkCard = ({ title, description, imageSrc, alt }) => (
   <div className="bg-black/80 border-l-4 border-blue-500 rounded-xl shadow-lg max-w-3xl mx-auto mb-6 overflow-hidden">

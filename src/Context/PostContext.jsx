@@ -30,11 +30,6 @@ export const PostProvider = ({ children }) => {
         ? [res?.data?.project]
         : [];
 
-      // rawPosts.filter((p) => {
-      //   console.log(p);
-      //   return p.isGlobalPost === true;
-      // });
-
       const safePosts = rawPosts
         .filter((p) => p?.isGlobalPost === true)
         .map((p) => ({
@@ -70,18 +65,11 @@ export const PostProvider = ({ children }) => {
       );
 
       // API Call to toggle
-      // const res = await axiosInstance.post(
-      //   `/api/project/${postId}/like`,
-      //   {},
-      //   {
-      //     headers: { Authorization: `Bearer ${authToken}` },
-      //   }
-      // );
       const res = await axiosInstance.post(
         `/api/project/${postId}/like`,
         {},
         {
-          headers: { Authorization: authToken },
+          headers: { Authorization: `Bearer ${authToken}` },
         }
       );
     } catch (err) {

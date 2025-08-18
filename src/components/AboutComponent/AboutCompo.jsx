@@ -1,10 +1,9 @@
-import React from "react";
 import Landing1 from "./Landing1";
 import Landing2 from "./Landing2";
 import Landing3 from "./Landing3";
 import Landing4 from "./Landing4";
 import Landing5 from "./Landing5";
-import { ArrowLeft, CircleArrowLeft, CircleChevronLeft } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 
 const AboutCompo = () => {
   return (

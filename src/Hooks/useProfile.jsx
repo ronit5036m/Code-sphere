@@ -1,4 +1,3 @@
-// hooks/useUserProfile.js
 import { useState, useEffect } from "react";
 import axiosInstance from "../api/axiosInstance";
 import { useAuth } from "../Context/AuthContext";
@@ -18,7 +17,7 @@ export default function useUserProfile(userId) {
 
     axiosInstance
       .get(`/api/user/${userId}`, {
-        headers: { Authorization: authToken },
+        headers: { Authorization: `Bearer ${authToken}` },
       })
       .then((res) => {
         if (isMounted) {

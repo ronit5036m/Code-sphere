@@ -25,7 +25,7 @@ const Footerlinks = [
 const Footer = () => {
   return (
     <>
-      <div className="text-lg text-neutral-600 mt-6 leading-6">
+      <div className="text-lg text-neutral-600 m-6 leading-6">
         {Footerlinks.map((link) => (
           <Link to={link.route} key={link.id} className="mr-2 hover:underline">
             {link.name}

@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import axiosInstance from "../../api/axiosInstance";
 import { useAuth } from "../../Context/AuthContext";
+import Footer from "../../components/Footer/Footer";
 
 export default function LoginForm() {
   const { login } = useAuth();
@@ -135,6 +136,9 @@ export default function LoginForm() {
             </p>
           </form>
         </div>
+      </div>
+      <div className="w-full flex justify-center items-center">
+        <Footer />
       </div>
     </>
   );

@@ -7,16 +7,15 @@ import Home from "./pages/Home/Home";
 import Errorpage from "./pages/Error/Errorpage";
 import { PublicRoute, PrivateRoute } from "./auth/Auth";
 import { AuthProvider } from "./Context/AuthContext";
-import "./App.css";
 import { SearchContext } from "./Context/SearchContext";
 import Profile from "./pages/UserProfile/Profile";
 import SearchBar from "./components/Search/Search";
 import { ResponsiveProvider } from "./Context/ResponsiveContext";
 import { PostProvider } from "./Context/PostContext";
 import About from "./pages/About/About";
-import AppLoading from "./components/Loading/Loading";
 import EditProfile from "./pages/Edit/EditProfile";
 import CreateProject from "./pages/CreateProject/CreateProject";
+import "./App.css";
 
 const App = () => {
   const { isSearch } = useContext(SearchContext);

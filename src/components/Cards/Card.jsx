@@ -1,4 +1,3 @@
-import React from "react";
 
 const Card = ({ title, content, imageUrl, footer }) => (
   <div className="bg-gradient-to-b from-[#18181b] to-[#23272f] border border-gray-800 rounded-2xl shadow-2xl overflow-hidden w-[320px] hover:scale-[1.03] hover:shadow-blue-500/20 transition-all duration-300">

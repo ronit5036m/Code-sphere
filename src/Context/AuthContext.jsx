@@ -17,11 +17,8 @@ export const AuthProvider = ({ children }) => {
 
     try {
       setFullloading(true);
-      // const res = await axiosInstance.get(`/api/user/`, {
-      //   headers: { Authorization: `Bearer ${authToken}` },
-      // });
       const res = await axiosInstance.get(`/api/user/`, {
-        headers: { Authorization: authToken },
+        headers: { Authorization: `Bearer ${authToken}` },
       });
 
       setCurrentUser(res.data);
@@ -42,8 +39,7 @@ export const AuthProvider = ({ children }) => {
 
   // login handler
   const login = async (token) => {
-    // localStorage.setItem("token", extractBearerToken(token));
-    localStorage.setItem("token", token);
+    localStorage.setItem("token", extractBearerToken(token));
     await fetchUser();
   };
 

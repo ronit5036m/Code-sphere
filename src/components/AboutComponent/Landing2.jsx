@@ -1,6 +1,6 @@
 import React from "react";
 import Card from "../Cards/Card";
-
+import Logo from "../../assets/logo";
 function Landing2() {
   return (
     <main className="py-12">
@@ -19,19 +19,19 @@ function Landing2() {
         <Card
           title="Project uploads"
           content="See what others build and take inspiration; build collaboration"
-          imageUrl="./src/assets/image2.jpg"
+          imageUrl={Logo.image2}
           footer="Photo by Unsplash"
         />
         <Card
           title="Discover peers and opportunities"
           content="Talk with 1% of developers and grow more"
-          imageUrl="./src/assets/image3.jpg"
+          imageUrl={Logo.image3}
           footer="Photo by Unsplash"
         />
         <Card
           title="Community engagement"
           content="Join our Discord server where people show work and get hired"
-          imageUrl="./src/assets/image4.jpg"
+          imageUrl={Logo.image4}
           footer="Photo by Unsplash"
         />
       </div>
