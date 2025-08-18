@@ -70,11 +70,18 @@ export const PostProvider = ({ children }) => {
       );
 
       // API Call to toggle
+      // const res = await axiosInstance.post(
+      //   `/api/project/${postId}/like`,
+      //   {},
+      //   {
+      //     headers: { Authorization: `Bearer ${authToken}` },
+      //   }
+      // );
       const res = await axiosInstance.post(
         `/api/project/${postId}/like`,
         {},
         {
-          headers: { Authorization: `Bearer ${authToken}` },
+          headers: { Authorization: authToken },
         }
       );
     } catch (err) {

@@ -59,9 +59,15 @@ const EditprofileComponent = () => {
         data.append(key, formData[key]);
       });
       setLoading(true);
+      // await axiosInstance.post("/api/profile", data, {
+      //   headers: {
+      //     Authorization: `Bearer ${authToken}`,
+      //     "Content-Type": "multipart/form-data",
+      //   },
+      // });
       await axiosInstance.post("/api/profile", data, {
         headers: {
-          Authorization: `Bearer ${authToken}`,
+          Authorization: authToken,
           "Content-Type": "multipart/form-data",
         },
       });

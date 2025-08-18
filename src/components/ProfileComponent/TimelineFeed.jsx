@@ -14,8 +14,8 @@ const TimelineFeed = ({ projects }) => {
           No Project yet
         </div>
       ) : (
-        filteredProjects?.map((post) => (
-          <ProfileTimeLine key={post?.project?._id} post={post} />
+        filteredProjects?.map((post, i) => (
+          <ProfileTimeLine key={i} post={post} />
         ))
       )}
     </div>

@@ -24,8 +24,9 @@ const ProfileComponent = ({ profile, isCurrentUser, projects }) => {
 
   const handleLogout = async () => {
     await logout();
-    navigate("/login");
     toast.success("Logout successfully");
+    window.location.reload();
+    navigate("/login");
   };
 
   // Close dropdown when clicking outside
@@ -153,12 +154,13 @@ const ProfileComponent = ({ profile, isCurrentUser, projects }) => {
 
             {profile?.user?.links && (
               <div className="font-medium gap-3">
-                {Object.entries(profile?.user?.links).map(
-                  ([platform, url], i) => (
+                {Object.entries(profile?.user?.links || {})
+                  .filter(([_, url]) => url) // keep only non-empty values
+                  .map(([platform, url], i) => (
                     <p key={i} className="font-medium">
                       {platform} :{" "}
                       <a
-                        href={`https://${url}`}
+                        href={url.startsWith("http") ? url : `https://${url}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-blue-500"
@@ -166,8 +168,7 @@ const ProfileComponent = ({ profile, isCurrentUser, projects }) => {
                         {url}
                       </a>
                     </p>
-                  )
-                )}
+                  ))}
               </div>
             )}
           </div>

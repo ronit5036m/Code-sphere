@@ -11,9 +11,9 @@ export default function MoreMenu() {
 
   const handleLogout = async () => {
     await logout();
+    toast.success("Logout successfully");
     window.location.reload();
     navigate("/login");
-    toast.success("Logout successfully");
   };
 
   return (

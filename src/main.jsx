@@ -4,9 +4,9 @@ import App from "./App.jsx";
 import SearchContextProvider from "./Context/SearchContext.jsx";
 
 createRoot(document.getElementById("root")).render(
-  // <StrictMode>
-  <SearchContextProvider>
-    <App />
-  </SearchContextProvider>
-  // </StrictMode>
+  <StrictMode>
+    <SearchContextProvider>
+      <App />
+    </SearchContextProvider>
+  </StrictMode>
 );

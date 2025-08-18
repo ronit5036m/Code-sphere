@@ -28,8 +28,11 @@ const ProfilePage = () => {
     const fetchProfile = async () => {
       try {
         setLoading(true);
+        // const res = await axiosInstance.get(`/api/user/${id}`, {
+        //   headers: { Authorization: `Bearer ${authToken}` },
+        // });
         const res = await axiosInstance.get(`/api/user/${id}`, {
-          headers: { Authorization: `Bearer ${authToken}` },
+          headers: { Authorization: authToken },
         });
         setLoading(false);
 
@@ -51,9 +54,14 @@ const ProfilePage = () => {
     };
 
     const fetchProjects = async (projectIds) => {
+      // const projectPromises = projectIds.map((id) =>
+      //   axiosInstance.get(`/api/project/${id}`, {
+      //     headers: { Authorization: `Bearer ${authToken}` },
+      //   })
+      // );
       const projectPromises = projectIds.map((id) =>
         axiosInstance.get(`/api/project/${id}`, {
-          headers: { Authorization: `Bearer ${authToken}` },
+          headers: { Authorization: authToken },
         })
       );
 
