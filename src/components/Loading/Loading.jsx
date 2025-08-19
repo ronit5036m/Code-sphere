@@ -3,7 +3,7 @@ import React from "react";
 const AppLoading = () => {
   return (
     <>
-      <div className="h-screen bg-black z-999 flex justify-center items-center">
+      <div className="h-screen bg-black z-999 flex justify-center items-center overflow-y-hidden">
         <div className="flex items-center justify-center">
           <style>{`
         @keyframes gradient-waves {
