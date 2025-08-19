@@ -11,6 +11,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination, Navigation } from "swiper/modules";
 import { useMedia } from "../../Context/ResponsiveContext";
+import Logo from "../../assets/logo";
 
 export default function PostCard({ post }) {
   const { toggleLike } = usePosts();
@@ -43,7 +44,7 @@ export default function PostCard({ post }) {
       {/* Header */}
       <div className="flex items-center py-4">
         <img
-          src={post?.user?.avatar}
+          src={post?.user?.avatar || Logo.defaultUser}
           alt={post?.user?.name}
           className="w-10 h-10 rounded-full border border-neutral-700 object-cover"
         />
