@@ -60,7 +60,7 @@ const ProfileComponent = ({ profile, isCurrentUser, projects }) => {
           <div className="flex items-center space-x-4 ">
             <div className="w-25 h-25 rounded-full shadow-md overflow-hidden bg-gradient-to-l from-pink-600 via-red-500 to-orange-400 p-1">
               <img
-                src={profile?.user?.avatar}
+                src={profile?.user?.avatar || Logo.defaultUser}
                 alt="Profile"
                 className="w-full h-full object-cover rounded-full"
               />
@@ -69,7 +69,7 @@ const ProfileComponent = ({ profile, isCurrentUser, projects }) => {
               <h1 className="text-3xl font-bold text-white">
                 {profile?.user?.name}
               </h1>
-              <p className="text-white opacity-90">Devloper</p>
+              <p className="text-white opacity-90">@ Devloper</p>
             </div>
           </div>
 

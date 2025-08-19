@@ -1,26 +1,28 @@
 import { useState, useContext } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import { SearchContext } from "../../Context/SearchContext";
 import { useAuth } from "../../Context/AuthContext";
 import { Search, Heart, PlusSquare, Menu, HomeIcon, Send } from "lucide-react";
 import Logo from "../../assets/logo";
 import MoreMenu from "../MoreComponent/More";
 import Footer from "../Footer/Footer";
+import { GrHomeRounded } from "react-icons/gr";
 
 export const DesktopSidebar = () => {
   const [isMoreClicked, setIsMoreClicked] = useState(false);
   const { CurrentUser } = useAuth();
   const { isSearch, setIsSearch } = useContext(SearchContext);
-
-  // console.log(isMoreClicked);
   return (
     <>
       <aside className="sticky top-0 h-screen bg-black border-r border-neutral-900 flex flex-col w-64">
         {/* Logo */}
         <div className="flex items-center justify-between px-4 py-4 border-b border-neutral-900">
-          <h1 className="text-white text-2xl font-bold font-cursive font-mono">
-            <Link to="/">CodeSphere</Link>
-          </h1>
+          <Link
+            to="/"
+            className="bg-gradient-to-tl from-pink-600 via-red-500 to-orange-400 bg-clip-text text-transparent text-3xl font-bold font-cursive font-mono"
+          >
+            Codesphere
+          </Link>
         </div>
 
         {/* Menu */}
@@ -37,9 +39,9 @@ export const DesktopSidebar = () => {
               }`
             }
           >
-            <HomeIcon
+            <GrHomeRounded
               size={25}
-              className="group-hover:scale-110 transition-transform"
+              className={`group-hover:scale-110 transition-transform text-white`}
             />
             <div>Home</div>
           </NavLink>

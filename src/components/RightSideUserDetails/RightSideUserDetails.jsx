@@ -3,6 +3,7 @@ import { useAuth } from "../../Context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import { useMediaQuery } from "../../Hooks/useMediaQuery";
 import Footer from "../Footer/Footer";
+import Logo from "../../assets/logo";
 
 export default function RightSideUserDetails() {
   const { CurrentUser } = useAuth();
@@ -13,7 +14,7 @@ export default function RightSideUserDetails() {
       <div className="flex items-center justify-between mt-5">
         <div className="flex items-center space-x-5">
           <img
-            src={CurrentUser?.existuser?.avatar}
+            src={CurrentUser?.existuser?.avatar || Logo.defaultUser}
             alt={CurrentUser?.existuser?.username}
             className="h-12 w-12 rounded-full object-cover cursor-pointer"
             onClick={() => navigate(`/profile/${CurrentUser?.existuser?._id}`)}
@@ -25,7 +26,7 @@ export default function RightSideUserDetails() {
             >
               {CurrentUser?.existuser?.name}
             </Link>
-            <p className="text-gray-400 text-lg">
+            <p className="text-neutral-400 text-lg">
               @{CurrentUser?.existuser?.username}
             </p>
           </div>
