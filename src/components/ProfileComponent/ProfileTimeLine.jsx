@@ -100,7 +100,7 @@ const ProfileTimeLine = ({ post }) => {
                 <img
                   src={img}
                   alt={`Post ${idx + 1}`}
-                  className="w-full aspect-video max-h-[500px] object-cover rounded-lg"
+                  className="w-full aspect-square max-h-[500px] object-cover rounded-lg"
                   loading="lazy"
                 />
               </SwiperSlide>

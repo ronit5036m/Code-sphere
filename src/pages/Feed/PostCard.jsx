@@ -108,7 +108,7 @@ export default function PostCard({ post }) {
                   alt={`Post ${idx + 1}`}
                   className="
               w-full
-              aspect-video
+              aspect-square
               max-h-[500px]
               object-cover
               rounded-lg
