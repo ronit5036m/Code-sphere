@@ -6,12 +6,20 @@ import { useAuth } from "../../Context/AuthContext";
 import { Link } from "react-router-dom";
 import { GiEarthAsiaOceania } from "react-icons/gi";
 
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/pagination";
+import { Pagination, Navigation } from "swiper/modules";
+import { useMedia } from "../../Context/ResponsiveContext";
+
 export default function PostCard({ post }) {
   const { toggleLike } = usePosts();
   const { CurrentUser } = useAuth();
   const [showModal, setShowModal] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const likedByUser = post?.likes?.includes(CurrentUser?.existuser?._id);
+
+  const isMobileSize = useMedia();
 
   const openModal = (index) => {
     setCurrentImageIndex(index);
@@ -56,9 +64,8 @@ export default function PostCard({ post }) {
           </span>
         </Link>
       </div>
-
       {/* Images Grid */}
-      {post?.images?.length > 0 && (
+      {isMobileSize && post?.images?.length > 0 && (
         <div
           className={`grid ${
             post.images.length === 1
@@ -78,6 +85,39 @@ export default function PostCard({ post }) {
               loading="lazy"
             />
           ))}
+        </div>
+      )}
+
+      {/* Image Swiper */}
+
+      {!isMobileSize && post?.images?.length > 0 && (
+        <div className="w-full relative">
+          <Swiper
+            pagination={{ clickable: true }}
+            navigation={true}
+            modules={[Pagination, Navigation]}
+            className="w-full rounded-lg bg-black"
+          >
+            {post.images.map((img, idx) => (
+              <SwiperSlide
+                key={idx}
+                className="flex items-center justify-center"
+              >
+                <img
+                  src={img}
+                  alt={`Post ${idx + 1}`}
+                  className="
+              w-full
+              aspect-video
+              max-h-[500px]
+              object-cover
+              rounded-lg
+            "
+                  loading="lazy"
+                />
+              </SwiperSlide>
+            ))}
+          </Swiper>
         </div>
       )}
 
@@ -132,7 +172,6 @@ export default function PostCard({ post }) {
           </a>
         )}
       </div>
-
       {/* Image Modal */}
       {showModal && (
         <div className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-999">

@@ -32,8 +32,10 @@ export default function LoginForm() {
       }
     } catch (error) {
       if (error.response) {
+        console.clear();
         toast.error(error?.response?.data?.message || "Login failed.");
       } else {
+        console.clear();
         toast.error("Server error. Please try again later.");
       }
     }

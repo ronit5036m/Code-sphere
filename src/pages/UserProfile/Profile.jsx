@@ -19,6 +19,7 @@ const ProfilePage = () => {
   const [loading, setLoading] = useState(true);
   const [loadingProjects, setLoadingProjects] = useState(true);
   const [projects, setProjects] = useState([]);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -35,10 +36,10 @@ const ProfilePage = () => {
           setProjects([]); // No projects
           setLoadingProjects(false);
         }
-
         setProfile(res.data);
       } catch (err) {
-        console.error("Error fetching profile", err);
+        console.clear();
+        setError(err);
         setLoadingProjects(false);
       } finally {
         setLoading(false);

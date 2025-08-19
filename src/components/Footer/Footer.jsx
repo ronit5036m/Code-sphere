@@ -31,7 +31,7 @@ const Footer = () => {
             {link.name}
           </Link>
         ))}
-        <p className="mt-2">© 2025 code sphere</p>
+        <p className="mt-2">© {new Date().getFullYear()} code sphere</p>
       </div>
     </>
   );

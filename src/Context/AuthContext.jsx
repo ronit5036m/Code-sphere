@@ -11,6 +11,7 @@ export const AuthProvider = ({ children }) => {
   const [likes, setLikes] = useState([]);
   const authToken = localStorage.getItem("token");
   const [CurrentUser, setCurrentUser] = useState(null);
+  const [error, setError] = useState("");
 
   const fetchUser = async () => {
     if (!authToken) return;
@@ -24,8 +25,8 @@ export const AuthProvider = ({ children }) => {
       setCurrentUser(res.data);
       setIsLoggedIn(true);
     } catch (error) {
-      console.error("Failed to fetch user:", error);
       localStorage.removeItem("token");
+      setError(error);
       setIsLoggedIn(false);
     } finally {
       setFullloading(false);

@@ -44,9 +44,9 @@ export default function SearchBar() {
             )
           );
         })
-        .catch((err) => {
-          console.error("Error fetching suggestions:", err);
-        })
+        // .catch((err) => {
+        //   console.error("Error fetching suggestions:", err);
+        // })
         .finally(() => {
           setLoading(false);
         });

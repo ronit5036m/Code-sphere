@@ -1,4 +1,5 @@
 import { usePosts } from "../../Context/PostContext";
+import { useMedia } from "../../Context/ResponsiveContext";
 import ProfileTimeLine from "./ProfileTimeLine";
 
 const TimelineFeed = ({ projects }) => {

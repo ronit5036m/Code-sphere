@@ -9,6 +9,7 @@ export const PostProvider = ({ children }) => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [profile, setProfile] = useState(null);
+  const [error, setError] = useState("");
 
   const shuffleArray = (arr) => {
     let array = [...arr];
@@ -40,7 +41,7 @@ export const PostProvider = ({ children }) => {
       // Shuffle posts before setting state
       setPosts(shuffleArray(safePosts));
     } catch (err) {
-      console.error("Error fetching posts:", err);
+      setError(err);
     } finally {
       setLoading(false);
     }
@@ -73,7 +74,7 @@ export const PostProvider = ({ children }) => {
         }
       );
     } catch (err) {
-      console.error("Error toggling like:", err);
+      setError(err);
       fetchPosts();
     }
   };

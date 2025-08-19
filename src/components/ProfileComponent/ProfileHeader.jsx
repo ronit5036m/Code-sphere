@@ -108,7 +108,7 @@ const ProfileComponent = ({ profile, isCurrentUser, projects }) => {
       </div>
 
       {/* Profile Info */}
-      <div className="p-5">
+      <div className="px-5">
         <div className="flex justify-between m-5">
           <div className="text-center">
             <p className="text-2xl font-bold">

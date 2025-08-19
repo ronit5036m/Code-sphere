@@ -4,10 +4,17 @@ import { Heart, X, ChevronLeft, ChevronRight, Dot } from "lucide-react";
 import { timeAgo } from "../../utils/timeAgo";
 import { BiLock } from "react-icons/bi";
 import { GiEarthAsiaOceania } from "react-icons/gi";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/pagination";
+import { Pagination, Navigation } from "swiper/modules";
+import { useMedia } from "../../Context/ResponsiveContext";
 
 const ProfileTimeLine = ({ post }) => {
   const [showModal, setShowModal] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const isMobileSize = useMedia();
+  const images = post?.project?.images || post?.images || [];
 
   const openModal = (index) => {
     setCurrentImageIndex(index);
@@ -15,15 +22,11 @@ const ProfileTimeLine = ({ post }) => {
   };
 
   const nextImage = () => {
-    setCurrentImageIndex((prev) =>
-      prev === post?.project?.images?.length - 1 ? 0 : prev + 1
-    );
+    setCurrentImageIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
   };
 
   const prevImage = () => {
-    setCurrentImageIndex((prev) =>
-      prev === 0 ? post?.project?.images?.length - 1 : prev - 1
-    );
+    setCurrentImageIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
   };
 
   return (
@@ -46,9 +49,7 @@ const ProfileTimeLine = ({ post }) => {
           </p>
           <span
             className="px-5 text-neutral-500"
-            title={
-              `${post?.project?.isGlobalPost ? "Public" : "Private"}` || ""
-            }
+            title={post?.project?.isGlobalPost ? "Public" : "Private"}
           >
             {post?.project?.isGlobalPost ? (
               <GiEarthAsiaOceania size={17} />
@@ -59,18 +60,18 @@ const ProfileTimeLine = ({ post }) => {
         </Link>
       </div>
 
-      {/* Images Grid */}
-      {post?.project?.images?.length > 0 && (
+      {/* Images */}
+      {isMobileSize && images.length > 0 && (
         <div
           className={`grid ${
-            post?.project?.images?.length === 1
+            images.length === 1
               ? "grid-cols-1"
-              : post?.project?.images?.length === 2
+              : images.length === 2
               ? "grid-cols-2"
               : "grid-cols-2"
           } gap-1`}
         >
-          {post?.project?.images?.map((img, idx) => (
+          {images.map((img, idx) => (
             <img
               key={idx}
               src={img}
@@ -83,12 +84,34 @@ const ProfileTimeLine = ({ post }) => {
         </div>
       )}
 
+      {!isMobileSize && images.length > 0 && (
+        <div className="w-full relative">
+          <Swiper
+            pagination={{ clickable: true }}
+            navigation={true}
+            modules={[Pagination, Navigation]}
+            className="w-full rounded-lg bg-black"
+          >
+            {images.map((img, idx) => (
+              <SwiperSlide
+                key={idx}
+                className="flex items-center justify-center"
+              >
+                <img
+                  src={img}
+                  alt={`Post ${idx + 1}`}
+                  className="w-full aspect-video max-h-[500px] object-cover rounded-lg"
+                  loading="lazy"
+                />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
+      )}
+
       {/* Actions */}
       <div className="p-3">
-        <button
-          // onClick={() => toggleLike(post?._id)}
-          className={`transition-transform duration-150 `}
-        >
+        <button className={`transition-transform duration-150`}>
           <Heart
             color="transparent"
             className={`w-6 h-6 fill-red-500 transition-all duration-300`}
@@ -108,7 +131,7 @@ const ProfileTimeLine = ({ post }) => {
         {/* Tech Stack */}
         {post?.project?.techStack?.length > 0 && (
           <div className="flex flex-wrap gap-2 mt-2">
-            {post?.project?.techStack?.map((tech, idx) => (
+            {post?.project?.techStack.map((tech, idx) => (
               <span
                 key={idx}
                 className="bg-neutral-800 text-s px-4 py-2 rounded-lg text-neutral-300 font-bold"
@@ -118,23 +141,11 @@ const ProfileTimeLine = ({ post }) => {
             ))}
           </div>
         )}
-
-        {/* Project Link */}
-        {/* {post?.project?.projectLink && (
-          <a
-            href={post?.project?.projectLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-blue-400 text-sm mt-2 inline-block hover:underline"
-          >
-            View Project
-          </a>
-        )} */}
       </div>
 
       {/* Image Modal */}
       {showModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-999">
+        <div className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50">
           {/* Close Button */}
           <button
             className="absolute top-4 right-4 text-white"
@@ -144,7 +155,7 @@ const ProfileTimeLine = ({ post }) => {
           </button>
 
           {/* Prev Button */}
-          {post?.project?.images?.length > 1 && (
+          {images.length > 1 && (
             <button className="absolute left-4 text-white" onClick={prevImage}>
               <ChevronLeft size={40} />
             </button>
@@ -152,20 +163,21 @@ const ProfileTimeLine = ({ post }) => {
 
           {/* Current Image */}
           <img
-            src={post?.project?.images[currentImageIndex]}
+            src={images[currentImageIndex]}
             alt="Preview"
             className="max-h-[90vh] max-w-[90vw] object-contain"
           />
 
           {/* Next Button */}
-          {post?.project.images?.length > 1 && (
+          {images.length > 1 && (
             <button className="absolute right-4 text-white" onClick={nextImage}>
               <ChevronRight size={40} />
             </button>
           )}
         </div>
       )}
-      {/* Horizontal Ruler For defining the Post end */}
+
+      {/* Horizontal Ruler */}
       <div className="w-full border-b-2 border-neutral-900"></div>
     </div>
   );
