@@ -4,6 +4,7 @@ import { SearchContext } from "../../Context/SearchContext";
 import axiosInstance from "../../api/axiosInstance";
 import Logo from "../../assets/logo";
 import { Link } from "react-router-dom";
+import { ArrowUpLeft } from "lucide-react";
 
 export default function SearchBar() {
   const { isSearch, setIsSearch } = useContext(SearchContext);
@@ -40,13 +41,10 @@ export default function SearchBar() {
         .then((res) => {
           setResults(
             res.data.filter((user) =>
-              user?.name?.toLowerCase().startsWith(query.toLowerCase())
+              user?.name?.toLowerCase().includes(query.toLowerCase())
             )
           );
         })
-        // .catch((err) => {
-        //   console.error("Error fetching suggestions:", err);
-        // })
         .finally(() => {
           setLoading(false);
         });
@@ -86,21 +84,24 @@ p-3 rounded outline-none"
           )}
           {!loading && results.length > 0 ? (
             results.map((user) => (
-              // <div>
-              <Link
+              <div
                 key={user?._id}
-                className="flex items-center gap-3 p-2 hover:bg-neutral-900 rounded-md cursor-pointer"
-                to={`/profile/${user?._id}`}
-                onClick={() => setIsSearch(!isSearch)}
+                className="text-neutral-500 flex justify-between items-center"
               >
-                <img
-                  src={user?.avatar}
-                  alt={user?.name}
-                  className="w-8 h-8 rounded-full flex items-center object-cover"
-                />
-                <span className="text-white">{user?.name}</span>
-              </Link>
-              // </div>
+                <Link
+                  className="flex items-center w-full gap-3 p-2 hover:bg-neutral-900 rounded-md cursor-pointer"
+                  to={`/profile/${user?._id}`}
+                  onClick={() => setIsSearch(!isSearch)}
+                >
+                  <img
+                    src={user?.avatar}
+                    alt={user?.name}
+                    className="w-8 h-8 rounded-full flex items-center object-cover"
+                  />
+                  <span className="text-white">{user?.name}</span>
+                  <ArrowUpLeft />
+                </Link>
+              </div>
             ))
           ) : !loading && query ? (
             <p className="text-gray-400 text-sm text-center">No user found</p>

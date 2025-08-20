@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axiosInstance from "../../api/axiosInstance"; // adjust path
 import { useAuth } from "../../Context/AuthContext";
 import { useMedia } from "../../Context/ResponsiveContext";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, X } from "lucide-react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
@@ -38,13 +38,27 @@ const CreateProjectComponent = () => {
 
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
+    const maxSize = 2 * 1024 * 1024; // Max file size 2 MB
+
     if (files.length + formData.images.length > 5) {
-      alert("You can only upload up to 5 images.");
+      toast.error("You can only upload up to 5 images.");
       return;
     }
+
+    const validFiles = [];
+    for (let file of files) {
+      if (file.size > maxSize) {
+        toast.error(`${file.name} is larger than 2 MB`);
+      } else {
+        validFiles.push(file);
+      }
+    }
+
+    if (validFiles.length === 0) return;
+
     setFormData((prev) => ({
       ...prev,
-      images: [...prev.images, ...files],
+      images: [...prev.images, ...validFiles],
     }));
   };
 
@@ -164,15 +178,15 @@ const CreateProjectComponent = () => {
             <button
               type="button"
               onClick={handleToggle}
-              className={`w-14 h-7 flex items-center rounded-full p-1 transition ${
+              className={`w-15 h-7 flex items-center rounded-full transition ${
                 formData.isGlobalPost
-                  ? "bg-gradient-to-l from-pink-600 via-red-500 to-orange-400"
+                  ? "bg-gradient-to-tr from-pink-600 via-red-500 to-orange-400"
                   : "bg-neutral-600"
               }`}
             >
               <div
                 className={`w-5 h-5 bg-white rounded-full transform transition ${
-                  formData.isGlobalPost ? "translate-x-7" : "translate-x-0"
+                  formData.isGlobalPost ? "translate-x-7" : "translate-x-1"
                 }`}
               />
             </button>
@@ -206,7 +220,7 @@ const CreateProjectComponent = () => {
                       onClick={() => removeImage(i)}
                       className="absolute top-1 right-1 bg-red-600 text-xs px-2 py-1 rounded-md opacity-80 group-hover:opacity-100"
                     >
-                      ✕
+                      <X />
                     </button>
                   </div>
                 ))}
@@ -217,8 +231,8 @@ const CreateProjectComponent = () => {
           {/* Submit Button */}
           <button
             type="submit"
-            className={`w-full p-3 bg-gradient-to-l from-pink-600 via-red-500 to-orange-400 rounded-lg font-semibold hover:opacity-90 ${
-              loading && "opacity-60"
+            className={`w-full p-3 bg-gradient-to-l from-pink-600 via-red-500 to-orange-400 rounded-lg font-semibold ${
+              loading ? "opacity-60" : "hover:opacity-90"
             }`}
             disabled={loading}
           >

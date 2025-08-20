@@ -139,13 +139,7 @@ const ProfileTimeLine = ({ post }) => {
           >
             <div className="flex flex-col space-y-3">
               <button className="w-full py-2 rounded-lg hover:bg-neutral-700 text-left px-3">
-                Save Post
-              </button>
-              <button className="w-full py-2 rounded-lg hover:bg-neutral-700 text-left px-3">
                 Share
-              </button>
-              <button className="w-full py-2 rounded-lg hover:bg-neutral-700 text-left px-3">
-                Report
               </button>
               <button
                 className="w-full py-2 rounded-lg hover:bg-neutral-700 font-bold text-red-500 text-left px-3"
@@ -202,6 +196,7 @@ const ProfileTimeLine = ({ post }) => {
         </div>
       )}
 
+      
       {!isMobileSize && images.length > 0 && (
         <div className="w-full relative">
           <Swiper
