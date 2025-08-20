@@ -10,8 +10,10 @@ export default function PostFeed() {
 
   return (
     <div className={`flex flex-col gap-6 items-center w-2xl mx-4`}>
-      {posts?.length === 0 || loading ? (
+      {loading ? (
         <img src={Logo.loading} className="h-20 w-20 flex" />
+      ) : posts?.length === 0 ? (
+        <div>No posts are available</div>
       ) : (
         posts?.map((post) => <PostCard key={post._id} post={post} />)
       )}
