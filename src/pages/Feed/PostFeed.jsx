@@ -9,7 +9,7 @@ export default function PostFeed() {
   const { posts, loading } = usePosts();
 
   return (
-    <div className={`flex flex-col gap-6 items-center w-2xl mx-4`}>
+    <div className={`flex flex-col gap-6 items-center w-2xl mx-2`}>
       {loading ? (
         <img src={Logo.loading} className="h-20 w-20 flex" />
       ) : posts?.length === 0 ? (

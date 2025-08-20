@@ -4,19 +4,16 @@ import ProfileTimeLine from "./ProfileTimeLine";
 const TimelineFeed = ({ projects }) => {
   const { isCurrentUser } = usePosts();
 
-  // Deduplicate posts by unique id
   const uniqueProjects = Array.from(
     new Map(
       projects?.map((post) => [post?.project?._id || post?._id, post])
     ).values()
   );
 
-  // Apply filter: only global posts for non-current users
   let filteredProjects = isCurrentUser
     ? uniqueProjects
     : uniqueProjects.filter((post) => post?.project?.isGlobalPost === true);
 
-  // Sort by createdAt (newest first)
   filteredProjects = filteredProjects.sort(
     (a, b) =>
       new Date(b?.project?.createdAt || b?.createdAt) -
@@ -24,7 +21,7 @@ const TimelineFeed = ({ projects }) => {
   );
 
   return (
-    <div className="px-4">
+    <div className="px-2">
       {filteredProjects?.length === 0 ? (
         <div className="w-full flex items-center justify-center text-center">
           No Project yet

@@ -7,6 +7,7 @@ import {
   ChevronRight,
   Dot,
   Ellipsis,
+  MessageSquareWarning,
 } from "lucide-react";
 import { timeAgo } from "../../utils/timeAgo";
 import { BiLock } from "react-icons/bi";
@@ -22,9 +23,10 @@ import { useAuth } from "../../Context/AuthContext";
 import { usePosts } from "../../Context/PostContext";
 import toast from "react-hot-toast";
 
+
 const ProfileTimeLine = ({ post }) => {
   const { authToken } = useAuth();
-  // const { fetchPosts, setPosts } = usePosts();
+  const { isCurrentUser } = usePosts();
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -138,35 +140,48 @@ const ProfileTimeLine = ({ post }) => {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex flex-col space-y-3">
-              <button className="w-full py-2 rounded-lg hover:bg-neutral-700 text-left px-3">
-                Share
-              </button>
-              <button
-                className="w-full py-2 rounded-lg hover:bg-neutral-700 font-bold text-red-500 text-left px-3"
-                onClick={handleDeletePost}
-              >
-                Delete Post
-              </button>
+              {!isCurrentUser && (
+                <>
+                  <button className="w-full py-2 rounded-lg hover:bg-neutral-700 text-left px-3">
+                    Share
+                  </button>
+                  <button className="w-full py-2 rounded-lg hover:bg-neutral-700 font-bold text-red-500 text-left px-3">
+                    Report Post
+                  </button>
+                </>
+              )}
+              {isCurrentUser && (
+                <>
+                  {/* Delete Button */}
+                  <button
+                    className="w-full py-2 rounded-lg hover:bg-neutral-700 font-bold text-red-500 text-left px-3"
+                    onClick={handleDeletePost}
+                  >
+                    Delete Post
+                  </button>
 
-              {/* Toggle Button */}
-              <div className="flex items-center justify-between bg-neutral-700 rounded-lg p-2">
-                <span className="text-sm font-medium">
-                  {isGlobal ? "Public" : "Private"}
-                </span>
-                <button
-                  type="button"
-                  onClick={handleToggleVisibility}
-                  className={`w-14 h-6 flex items-center rounded-full transition ${
-                    isGlobal ? "bg-green-500" : "bg-neutral-600"
-                  }`}
-                >
-                  <div
-                    className={`w-5 h-5 bg-white rounded-full transform transition ${
-                      isGlobal ? "translate-x-6" : "translate-x-1"
-                    }`}
-                  />
-                </button>
-              </div>
+                  {/* Toggle Button */}
+
+                  <div className="flex items-center justify-between bg-neutral-700 rounded-lg p-2">
+                    <span className="text-sm font-medium">
+                      {isGlobal ? "Public" : "Private"}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={handleToggleVisibility}
+                      className={`w-14 h-6 flex items-center rounded-full transition ${
+                        isGlobal ? "bg-green-500" : "bg-neutral-600"
+                      }`}
+                    >
+                      <div
+                        className={`w-5 h-5 bg-white rounded-full transform transition ${
+                          isGlobal ? "translate-x-6" : "translate-x-1"
+                        }`}
+                      />
+                    </button>
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </div>
@@ -196,7 +211,6 @@ const ProfileTimeLine = ({ post }) => {
         </div>
       )}
 
-      
       {!isMobileSize && images.length > 0 && (
         <div className="w-full relative">
           <Swiper

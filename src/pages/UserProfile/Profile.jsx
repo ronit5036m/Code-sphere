@@ -55,12 +55,7 @@ const ProfilePage = () => {
       );
 
       const responses = await Promise.all(projectPromises);
-
-      // Append new projects without removing previous
-      setProjects((prevProjects) => [
-        ...prevProjects,
-        ...responses?.map((res) => res?.data),
-      ]);
+      setProjects(responses?.map((res) => res?.data));
     };
 
     fetchProfile();
