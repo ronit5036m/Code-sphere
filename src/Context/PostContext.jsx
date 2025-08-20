@@ -95,6 +95,7 @@ export const PostProvider = ({ children }) => {
     <PostContext.Provider
       value={{
         posts,
+        setPosts,
         loading,
         toggleLike,
         fetchPosts,

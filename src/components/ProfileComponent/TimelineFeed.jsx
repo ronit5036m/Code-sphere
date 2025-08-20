@@ -1,12 +1,27 @@
 import { usePosts } from "../../Context/PostContext";
-import { useMedia } from "../../Context/ResponsiveContext";
 import ProfileTimeLine from "./ProfileTimeLine";
 
 const TimelineFeed = ({ projects }) => {
   const { isCurrentUser } = usePosts();
-  const filteredProjects = isCurrentUser
-    ? projects
-    : projects?.filter((post) => post?.project?.isGlobalPost === true);
+
+  // Deduplicate posts by unique id
+  const uniqueProjects = Array.from(
+    new Map(
+      projects?.map((post) => [post?.project?._id || post?._id, post])
+    ).values()
+  );
+
+  // Apply filter: only global posts for non-current users
+  let filteredProjects = isCurrentUser
+    ? uniqueProjects
+    : uniqueProjects.filter((post) => post?.project?.isGlobalPost === true);
+
+  // Sort by createdAt (newest first)
+  filteredProjects = filteredProjects.sort(
+    (a, b) =>
+      new Date(b?.project?.createdAt || b?.createdAt) -
+      new Date(a?.project?.createdAt || a?.createdAt)
+  );
 
   return (
     <div className="px-4">
@@ -15,8 +30,8 @@ const TimelineFeed = ({ projects }) => {
           No Project yet
         </div>
       ) : (
-        filteredProjects?.map((post, i) => (
-          <ProfileTimeLine key={i} post={post} />
+        filteredProjects.map((post) => (
+          <ProfileTimeLine key={post?.project?._id || post?._id} post={post} />
         ))
       )}
     </div>

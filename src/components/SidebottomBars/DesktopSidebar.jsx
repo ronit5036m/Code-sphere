@@ -2,7 +2,15 @@ import { useState, useContext } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { SearchContext } from "../../Context/SearchContext";
 import { useAuth } from "../../Context/AuthContext";
-import { Search, Heart, PlusSquare, Menu, HomeIcon, Send } from "lucide-react";
+import {
+  Search,
+  Heart,
+  PlusSquare,
+  Menu,
+  HomeIcon,
+  Send,
+  House,
+} from "lucide-react";
 import Logo from "../../assets/logo";
 import MoreMenu from "../MoreComponent/More";
 import Footer from "../Footer/Footer";
@@ -39,7 +47,7 @@ export const DesktopSidebar = () => {
               }`
             }
           >
-            <GrHomeRounded
+            <House
               size={25}
               className={`group-hover:scale-110 transition-transform text-white`}
             />

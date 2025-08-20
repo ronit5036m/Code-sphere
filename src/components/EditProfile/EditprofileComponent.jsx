@@ -5,6 +5,7 @@ import { useAuth } from "../../Context/AuthContext";
 import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
 import { useMedia } from "../../Context/ResponsiveContext";
+import Logo from "../../assets/logo";
 
 const EditprofileComponent = () => {
   const { authToken, CurrentUser, fetchUser } = useAuth();
@@ -22,7 +23,7 @@ const EditprofileComponent = () => {
     instagram: "",
     facebook: "",
     skills: "",
-    avatar: null,
+    avatar: Logo.defaultUser,
   });
 
   useEffect(() => {
@@ -37,7 +38,7 @@ const EditprofileComponent = () => {
         instagram: CurrentUser?.existuser?.links?.instagram || "",
         facebook: CurrentUser?.existuser?.links?.facebook || "",
         skills: CurrentUser?.existuser?.skills || "",
-        avatar: CurrentUser?.existuser?.avatar || null,
+        avatar: CurrentUser?.existuser?.avatar || Logo.defaultUser,
       });
     }
   }, [CurrentUser]);

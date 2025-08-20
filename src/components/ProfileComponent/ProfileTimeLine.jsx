@@ -1,6 +1,13 @@
-import { Link } from "react-router-dom";
-import { useState } from "react";
-import { Heart, X, ChevronLeft, ChevronRight, Dot } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import {
+  Heart,
+  X,
+  ChevronLeft,
+  ChevronRight,
+  Dot,
+  Ellipsis,
+} from "lucide-react";
 import { timeAgo } from "../../utils/timeAgo";
 import { BiLock } from "react-icons/bi";
 import { GiEarthAsiaOceania } from "react-icons/gi";
@@ -10,12 +17,50 @@ import "swiper/css/pagination";
 import { Pagination, Navigation } from "swiper/modules";
 import { useMedia } from "../../Context/ResponsiveContext";
 import Logo from "../../assets/logo";
+import axiosInstance from "../../api/axiosInstance";
+import { useAuth } from "../../Context/AuthContext";
+import { usePosts } from "../../Context/PostContext";
+import toast from "react-hot-toast";
 
 const ProfileTimeLine = ({ post }) => {
+  const { authToken } = useAuth();
+  // const { fetchPosts, setPosts } = usePosts();
+  const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const isMobileSize = useMedia();
   const images = post?.project?.images || post?.images || [];
+
+  const [openThreeDotModel, setOpenThreeDotModel] = useState(false);
+
+  const [isGlobal, setIsGlobal] = useState(post?.project?.isGlobalPost);
+
+  const handleToggleVisibility = async () => {
+    try {
+      const updatedValue = !isGlobal;
+      setIsGlobal(updatedValue);
+
+      await axiosInstance.patch(
+        `/api/project/${post?.project?._id}`,
+        {
+          isGlobalPost: updatedValue,
+        },
+        {
+          headers: { Authorization: `Bearer ${authToken}` },
+        }
+      );
+    } catch {
+      setIsGlobal(post?.project?.isGlobalPost);
+    }
+  };
+
+  useEffect(() => {
+    if (openThreeDotModel) {
+      document.body.style.overflowY = "hidden";
+    } else {
+      document.body.style.overflowY = "auto";
+    }
+  }, [openThreeDotModel]);
 
   const openModal = (index) => {
     setCurrentImageIndex(index);
@@ -30,36 +75,108 @@ const ProfileTimeLine = ({ post }) => {
     setCurrentImageIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
   };
 
+  const handleDeletePost = async () => {
+    try {
+      const res = await axiosInstance.delete(
+        `/api/project/${post?.project?._id}`,
+        {
+          headers: { Authorization: `Bearer ${authToken}` },
+        }
+      );
+      setOpenThreeDotModel(false);
+      toast.success(res.data.message);
+      navigate("/");
+    } catch {
+      setOpenThreeDotModel(false);
+    }
+  };
+
   return (
     <div className="bg-black border-b-neutral-900 rounded-xl shadow-md max-w-md w-full mx-auto">
       {/* Header */}
-      <div className="flex items-center py-4">
-        <img
-          src={post?.project?.user?.avatar || Logo?.defaultUser}
-          alt={post?.project?.user?.name}
-          className="w-10 h-10 rounded-full border border-neutral-700 object-cover"
-        />
-        <Link
-          to={`/profile/${post?.project?.user?._id}`}
-          className="ml-3 text-white font-semibold flex items-center"
-        >
-          {post?.project?.user?.name}
-          <p className="text-sm text-neutral-400 flex items-center">
-            <Dot />
-            {timeAgo(post?.project?.createdAt)}
-          </p>
-          <span
-            className="px-5 text-neutral-500"
-            title={post?.project?.isGlobalPost ? "Public" : "Private"}
+      <div className="flex items-center justify-between">
+        <div className="flex items-center py-4">
+          <img
+            src={post?.project?.user?.avatar || Logo?.defaultUser}
+            alt={post?.project?.user?.name}
+            className="w-10 h-10 rounded-full border border-neutral-700 object-cover"
+          />
+          <Link
+            to={`/profile/${post?.project?.user?._id}`}
+            className="ml-3 text-white font-semibold flex items-center"
           >
-            {post?.project?.isGlobalPost ? (
-              <GiEarthAsiaOceania size={17} />
-            ) : (
-              <BiLock size={17} />
-            )}
-          </span>
-        </Link>
+            {post?.project?.user?.name}
+            <p className="text-sm text-neutral-400 flex items-center">
+              <Dot />
+              {timeAgo(post?.project?.createdAt)}
+            </p>
+            <span
+              className="px-5 text-neutral-500"
+              title={isGlobal ? "Public" : "Private"}
+            >
+              {isGlobal ? (
+                <GiEarthAsiaOceania size={17} />
+              ) : (
+                <BiLock size={17} />
+              )}
+            </span>
+          </Link>
+        </div>
+        <Ellipsis
+          className="cursor-pointer"
+          onClick={() => setOpenThreeDotModel(!openThreeDotModel)}
+        />
       </div>
+
+      {openThreeDotModel && (
+        <div
+          className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
+          onClick={() => setOpenThreeDotModel(false)}
+        >
+          <div
+            className="bg-neutral-800 w-80 rounded-2xl shadow-2xl p-5 relative text-gray-200"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex flex-col space-y-3">
+              <button className="w-full py-2 rounded-lg hover:bg-neutral-700 text-left px-3">
+                Save Post
+              </button>
+              <button className="w-full py-2 rounded-lg hover:bg-neutral-700 text-left px-3">
+                Share
+              </button>
+              <button className="w-full py-2 rounded-lg hover:bg-neutral-700 text-left px-3">
+                Report
+              </button>
+              <button
+                className="w-full py-2 rounded-lg hover:bg-neutral-700 font-bold text-red-500 text-left px-3"
+                onClick={handleDeletePost}
+              >
+                Delete Post
+              </button>
+
+              {/* Toggle Button */}
+              <div className="flex items-center justify-between bg-neutral-700 rounded-lg p-2">
+                <span className="text-sm font-medium">
+                  {isGlobal ? "Public" : "Private"}
+                </span>
+                <button
+                  type="button"
+                  onClick={handleToggleVisibility}
+                  className={`w-14 h-6 flex items-center rounded-full transition ${
+                    isGlobal ? "bg-green-500" : "bg-neutral-600"
+                  }`}
+                >
+                  <div
+                    className={`w-5 h-5 bg-white rounded-full transform transition ${
+                      isGlobal ? "translate-x-6" : "translate-x-1"
+                    }`}
+                  />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Images */}
       {isMobileSize && images.length > 0 && (

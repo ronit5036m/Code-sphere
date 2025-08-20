@@ -78,7 +78,7 @@ const ProfilePage = () => {
 
   return (
     <>
-      <div className="flex min-h-screen bg-black text-white">
+      <div className="flex bg-black text-white">
         {isMobileSize ? <MobileBottombar /> : <DesktopSidebar />}
         <ProfileComponent
           profile={profile}
