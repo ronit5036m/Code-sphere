@@ -23,7 +23,6 @@ import { useAuth } from "../../Context/AuthContext";
 import { usePosts } from "../../Context/PostContext";
 import toast from "react-hot-toast";
 
-
 const ProfileTimeLine = ({ post }) => {
   const { authToken } = useAuth();
   const { isCurrentUser } = usePosts();
@@ -96,7 +95,7 @@ const ProfileTimeLine = ({ post }) => {
   return (
     <div className="bg-black border-b-neutral-900 rounded-xl shadow-md max-w-md w-full mx-auto">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between mx-2">
         <div className="flex items-center py-4">
           <img
             src={post?.project?.user?.avatar || Logo?.defaultUser}
@@ -214,7 +213,12 @@ const ProfileTimeLine = ({ post }) => {
       {!isMobileSize && images.length > 0 && (
         <div className="w-full relative">
           <Swiper
-            pagination={{ clickable: true }}
+            pagination={{
+              clickable: true,
+              bulletClass: "swiper-pagination-bullet !bg-netural-900",
+              bulletActiveClass:
+                "swiper-pagination-bullet-active !bg-gradient-to-tl from-pink-600 via-red-500 to-orange-400 bg-clip-text text-transparent",
+            }}
             navigation={true}
             modules={[Pagination, Navigation]}
             className="w-full rounded-lg bg-black"

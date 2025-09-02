@@ -89,7 +89,7 @@ export const PostProvider = ({ children }) => {
     }
   }, [location.pathname]);
 
-  const isCurrentUser = CurrentUser?.existuser?._id === profile?.user?._id;
+  const isCurrentUser = CurrentUser?.existuser?._id === profile?._id;
 
   return (
     <PostContext.Provider

@@ -30,8 +30,8 @@ const ProfilePage = () => {
         });
         setLoading(false);
 
-        if (res?.data?.user?.projects?.length > 0) {
-          fetchProjects(res?.data?.user?.projects);
+        if (res?.data?.projects?.length > 0) {
+          fetchProjects(res?.data?.projects);
         } else {
           setProjects([]); // No projects
           setLoadingProjects(false);
@@ -69,7 +69,7 @@ const ProfilePage = () => {
       </p>
     );
 
-  const isCurrentUser = CurrentUser?.existuser?._id === profile?.user?._id;
+  const isCurrentUser = CurrentUser?.existuser?._id === profile?._id;
 
   return (
     <>

@@ -7,8 +7,11 @@ import { Link } from "react-router-dom";
 import { GiEarthAsiaOceania } from "react-icons/gi";
 
 import { Swiper, SwiperSlide } from "swiper/react";
+
 import "swiper/css";
+import "swiper/css/navigation";
 import "swiper/css/pagination";
+
 import { Pagination, Navigation } from "swiper/modules";
 import { useMedia } from "../../Context/ResponsiveContext";
 import Logo from "../../assets/logo";
@@ -42,7 +45,7 @@ export default function PostCard({ post }) {
   return (
     <div className="bg-black border-b-neutral-900 rounded-xl shadow-md max-w-md w-full mx-auto">
       {/* Header */}
-      <div className="flex items-center py-4">
+      <div className="flex items-center py-4 mx-2">
         <img
           src={post?.user?.avatar || Logo.defaultUser}
           alt={post?.user?.name}
@@ -94,7 +97,12 @@ export default function PostCard({ post }) {
       {!isMobileSize && post?.images?.length > 0 && (
         <div className="w-full relative">
           <Swiper
-            pagination={{ clickable: true }}
+            pagination={{
+              clickable: true,
+              bulletClass: "swiper-pagination-bullet !bg-netural-900",
+              bulletActiveClass:
+                "swiper-pagination-bullet-active !bg-gradient-to-tl from-pink-600 via-red-500 to-orange-400 bg-clip-text text-transparent",
+            }}
             navigation={true}
             modules={[Pagination, Navigation]}
             className="w-full rounded-lg bg-black"
@@ -107,13 +115,7 @@ export default function PostCard({ post }) {
                 <img
                   src={img}
                   alt={`Post ${idx + 1}`}
-                  className="
-              w-full
-              aspect-square
-              max-h-[500px]
-              object-cover
-              rounded-lg
-            "
+                  className="w-full aspect-square max-h-[500px] object-cover rounded-lg"
                   loading="lazy"
                 />
               </SwiperSlide>

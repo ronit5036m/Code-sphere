@@ -21,7 +21,7 @@ const TimelineFeed = ({ projects }) => {
   );
 
   return (
-    <div className="px-2">
+    <div className="px-1">
       {filteredProjects?.length === 0 ? (
         <div className="w-full flex items-center justify-center text-center">
           No Project yet

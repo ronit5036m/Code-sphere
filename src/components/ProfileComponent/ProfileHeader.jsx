@@ -60,15 +60,13 @@ const ProfileComponent = ({ profile, isCurrentUser, projects }) => {
           <div className="flex items-center space-x-4 ">
             <div className="w-25 h-25 rounded-full shadow-md overflow-hidden bg-gradient-to-l from-pink-600 via-red-500 to-orange-400 p-1">
               <img
-                src={profile?.user?.avatar || Logo.defaultUser}
+                src={profile?.avatar || Logo.defaultUser}
                 alt="Profile"
                 className="w-full h-full object-cover rounded-full"
               />
             </div>
             <div>
-              <h1 className="text-3xl font-bold text-white">
-                {profile?.user?.name}
-              </h1>
+              <h1 className="text-3xl font-bold text-white">{profile?.name}</h1>
               <p className="text-white opacity-90">@ Devloper</p>
             </div>
           </div>
@@ -110,51 +108,55 @@ const ProfileComponent = ({ profile, isCurrentUser, projects }) => {
       {/* Profile Info */}
       <div className="px-5">
         <div className="flex justify-between m-5">
-          <div className="text-center">
+          <div className="text-center cursor-pointer">
             <p className="text-2xl font-bold">
-              {profile?.user?.projects?.length || 0}
+              {profile?.projects?.length || 0}
             </p>
             <p className="text-gray-500">posts</p>
           </div>
-          <div className="text-center">
-            <p className="text-2xl font-bold">{0}</p>
+          <div className="text-center cursor-pointer">
+            <p className="text-2xl font-bold">
+              {profile?.followers?.length || 0}
+            </p>
             <p className="text-gray-500">followers</p>
           </div>
-          <div className="text-center">
-            <p className="text-2xl font-bold">{0}</p>
+          <div className="text-center cursor-pointer">
+            <p className="text-2xl font-bold">
+              {profile?.following?.length || 0}
+            </p>
             <p className="text-gray-500">following</p>
           </div>
         </div>
 
         <div className="mb-6">
           <h2 className="text-xl font-bold text-neutral-300 mb-1">
-            @{profile?.user?.username}
+            @{profile?.username}
           </h2>
-          {profile?.user?.bio && (
-            <p className="text-neutral-300 mb-2">{profile?.user?.bio}</p>
+          {profile?.bio && (
+            <p className="text-neutral-300 mb-2">{profile?.bio}</p>
           )}
           <div>
-            {profile?.user?.address && (
+            {profile?.address && (
               <p className="font-medium flex">
-                From <Dot /> {profile?.user?.address}
+                From <Dot /> {profile?.address}
               </p>
             )}
-            {profile?.user?.phone && (
+            {profile?.phone && (
               <p className="font-medium flex">
-                Contact <Dot /> {profile?.user?.phone}
+                Contact <Dot /> {profile?.phone}
               </p>
             )}
-            {profile?.user?.skills?.length > 0 && (
+            {profile?.skills?.length > 0 && (
               <div className="font-medium flex">
                 Skills
                 <Dot />
-                <p className="font-medium">{profile.user.skills.join(", ")}</p>
+                <p className="font-medium">{profile.skills.join(", ")}</p>
               </div>
             )}
 
-            {profile?.user?.links && (
+            {profile?.links && (
               <div className="font-medium gap-3">
-                {Object.entries(profile?.user?.links || {})
+                {Object.entries(profile?.links || {})
                   .filter(([_, url]) => url) // keep only non-empty values
                   .map(([platform, url], i) => (
                     <p key={i} className="font-medium">

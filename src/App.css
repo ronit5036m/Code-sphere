@@ -14,6 +14,27 @@
   background: #155dfc;
 } */
 
+/* styles.css */
+.swiper-button-next,
+.swiper-button-prev {
+  color: white; /* arrow color */
+  background: rgba(0, 0, 0, 0.5);
+  padding: 16px;
+  border-radius: 9999px; /* fully round */
+  transition: background 0.2s;
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  font-size: 18px; /* arrow size */
+  font-weight: bold;
+}
+
 body {
   background-color: black;
   overflow-x: hidden;
