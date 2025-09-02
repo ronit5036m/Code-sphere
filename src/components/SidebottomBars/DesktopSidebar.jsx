@@ -1,192 +1,3 @@
-// import { useState, useContext } from "react";
-// import { Link, NavLink, useLocation } from "react-router-dom";
-// import { SearchContext } from "../../Context/SearchContext";
-// import { useAuth } from "../../Context/AuthContext";
-// import {
-//   Search,
-//   Heart,
-//   PlusSquare,
-//   Menu,
-//   HomeIcon,
-//   Send,
-//   House,
-// } from "lucide-react";
-// import Logo from "../../assets/logo";
-// import MoreMenu from "../MoreComponent/More";
-// import Footer from "../Footer/Footer";
-// import { GrHomeRounded } from "react-icons/gr";
-
-// export const DesktopSidebar = () => {
-//   const [isMoreClicked, setIsMoreClicked] = useState(false);
-//   const { CurrentUser } = useAuth();
-//   const { isSearch, setIsSearch } = useContext(SearchContext);
-//   return (
-//     <>
-//       <aside className="sticky top-0 h-screen bg-black border-r border-neutral-900 flex flex-col w-64">
-//         {/* Logo */}
-//         <div className="flex items-center justify-between px-4 py-4 border-b border-neutral-900">
-//           {/* <Link
-//             to="/"
-//             className="bg-gradient-to-tl from-pink-600 via-red-500 to-orange-400 bg-clip-text text-transparent text-3xl font-bold font-cursive font-mono"
-//           >
-//             Codesphere
-//           </Link> */}
-//           <Link
-//             to="/"
-//             className="text-white text-3xl font-bold font-cursive font-mono"
-//           >
-//             Codesphere
-//           </Link>
-//         </div>
-
-//         {/* Menu */}
-//         <nav className="flex flex-col gap-2 mt-4">
-//           {/* Home */}
-//           <NavLink
-//             to="/"
-//             className={({ isActive }) =>
-//               `group flex items-center gap-3 px-4 py-4 rounded-xl text-lg transition-all duration-300 hover:bg-neutral-900 mx-2.5 text-white
-//               ${
-//                 isActive
-//                   ? "bg-none text-white"
-//                   : "text-gray-400 hover:bg-gray-800 hover:text-white"
-//               }`
-//             }
-//           >
-//             <House
-//               size={25}
-//               className={`group-hover:scale-110 transition-transform text-white`}
-//             />
-//             <div>Home</div>
-//           </NavLink>
-
-//           {/* Search */}
-
-//           <NavLink
-//             className={({ isActive }) =>
-//               `group flex items-center gap-3 px-4 py-4 rounded-xl text-lg transition-all duration-300 hover:bg-orange- mx-2.5
-//               ${
-//                 isActive
-//                   ? "bg-none text-white"
-//                   : "text-gray-400 hover:bg-gray-800 hover:text-white"
-//               }`
-//             }
-//             onClick={() => setIsSearch(!isSearch)}
-//           >
-//             <Search
-//               size={25}
-//               className="group-hover:scale-110 transition-transform"
-//             />
-//             <div>Search</div>
-//           </NavLink>
-
-//           {/* Messages */}
-
-//           <NavLink
-//             to="/"
-//             className={({ isActive }) =>
-//               `group flex items-center gap-3 px-4 py-4 rounded-xl text-lg transition-all duration-300 hover:bg-neutral-900 mx-2.5
-//               ${
-//                 isActive
-//                   ? "bg-none text-white"
-//                   : "text-gray-400 hover:bg-gray-800 hover:text-white"
-//               }`
-//             }
-//           >
-//             <Send
-//               size={25}
-//               className="group-hover:scale-110 transition-transform"
-//             />
-//             <div>Messages</div>
-//           </NavLink>
-
-//           {isMoreClicked && <MoreMenu />}
-
-//           {/* Notification */}
-
-//           <NavLink
-//             to="/"
-//             className={({ isActive }) =>
-//               `group flex items-center gap-3 px-4 py-4 rounded-xl text-lg transition-all duration-300 hover:bg-neutral-900 mx-2.5
-//               ${
-//                 isActive
-//                   ? "bg-none text-white"
-//                   : "text-gray-400 hover:bg-gray-800 hover:text-white"
-//               }`
-//             }
-//           >
-//             <Heart
-//               size={25}
-//               className="group-hover:scale-110 transition-transform"
-//             />
-//             <div>Notification</div>
-//           </NavLink>
-
-//           {/* Create Post */}
-
-//           <NavLink
-//             to="/create-projects"
-//             className={({ isActive }) =>
-//               `group flex items-center gap-3 px-4 py-4 rounded-xl text-lg transition-all duration-300 hover:bg-neutral-900 mx-2.5 text-white
-//               ${
-//                 isActive
-//                   ? "bg-none text-white"
-//                   : "text-gray-400 hover:bg-gray-800 hover:text-white"
-//               }`
-//             }
-//           >
-//             <PlusSquare
-//               size={25}
-//               className="group-hover:scale-110 transition-transform"
-//             />
-//             <div>Create</div>
-//           </NavLink>
-
-//           {/* User Profile */}
-
-//           <NavLink
-//             to={`/profile/${CurrentUser?.existuser?._id}`}
-//             className={({ isActive }) =>
-//               `group flex items-center gap-3 px-4 py-4 rounded-xl text-lg transition-all duration-300 hover:bg-neutral-900 mx-2.5
-//               ${
-//                 isActive
-//                   ? "bg-none text-white"
-//                   : "text-gray-400 hover:bg-gray-800 hover:text-white"
-//               }`
-//             }
-//           >
-//             <div className="group-hover:scale-110 transition-transform flex justify-center items-center overflow-hidden">
-//               <img
-//                 src={CurrentUser?.existuser?.avatar || Logo?.defaultUser}
-//                 alt={"profile"}
-//                 className="h-8 w-8 rounded-full object-cover"
-//               />
-//             </div>
-//             <div>Profile</div>
-//           </NavLink>
-
-//           {/* More menu */}
-
-//           <NavLink
-//             className={`group flex items-center gap-3 px-4 py-4 rounded-xl text-lg transition-all duration-300 hover:bg-neutral-900 mx-2.5 relative`}
-//             onClick={() => setIsMoreClicked(!isMoreClicked)}
-//           >
-//             <Menu
-//               size={25}
-//               className="group-hover:scale-110 transition-transform"
-//             />
-
-//             <div>More</div>
-//           </NavLink>
-//         </nav>
-//         <div className="w-full flex justify-center items-center">
-//           <Footer />
-//         </div>
-//       </aside>
-//     </>
-//   );
-// };
-
 import { useState, useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { SearchContext } from "../../Context/SearchContext";
@@ -204,37 +15,30 @@ export const DesktopSidebar = () => {
   const { fetchPosts } = usePosts();
 
   const scrollTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
+    window.scrollTo({ top: 0, behavior: "smooth" });
     fetchPosts();
   };
 
   // Sidebar Menu Items
   const menuItems = [
-    { name: "Home", icon: House, to: "/", action: scrollTop },
-    {
-      name: "Search",
-      icon: Search,
-      action: () => setIsSearch(!isSearch),
-    },
+    { name: "Home", icon: House, to: "/", onClick: scrollTop },
+    { name: "Search", icon: Search, onClick: () => setIsSearch(!isSearch) },
     { name: "Messages", icon: Send, to: "#" },
     { name: "Notification", icon: Heart, to: "#" },
     { name: "Create", icon: PlusSquare, to: "/create-projects" },
     {
       name: "Profile",
-      avatar: true,
       to: `/profile/${CurrentUser?.existuser?._id}`,
+      avatar: CurrentUser?.existuser?.avatar || Logo?.defaultUser,
     },
     {
       name: "More",
       icon: Menu,
-      action: () => setIsMoreClicked(!isMoreClicked),
+      onClick: () => setIsMoreClicked(!isMoreClicked),
     },
   ];
 
-  // Standard NavLink Styles
+  // NavLink Styles
   const baseLink =
     "group flex items-center gap-3 px-4 py-3 rounded-2xl text-lg transition-all duration-300 mx-2.5";
   const activeStyle = "bg-neutral-800 text-white shadow-md";
@@ -248,14 +52,14 @@ export const DesktopSidebar = () => {
           Codesphere
         </Link>
       </div>
-      {/* Menu */}
+
+      {/* More Menu */}
       {isMoreClicked && <MoreMenu />}
+
+      {/* Menu */}
       <nav className="flex flex-col gap-1 mt-6">
         {menuItems.map((item, index) => {
-          const isSpecial =
-            item.name === "Messages" || item.name === "Notification";
-
-          // Profile Item
+          // Avatar/Profile
           if (item.avatar) {
             return (
               <NavLink
@@ -265,24 +69,22 @@ export const DesktopSidebar = () => {
                   `${baseLink} ${isActive ? activeStyle : inactiveStyle}`
                 }
               >
-                <div className="group-hover:scale-110 transition-transform flex items-center overflow-hidden">
-                  <img
-                    src={CurrentUser?.existuser?.avatar || Logo?.defaultUser}
-                    alt="profile"
-                    className="h-9 w-9 rounded-full object-cover border border-neutral-700"
-                  />
-                </div>
+                <img
+                  src={item.avatar}
+                  alt="profile"
+                  className="h-9 w-9 rounded-full object-cover border border-neutral-700 group-hover:scale-110 transition-transform"
+                />
                 <span className="font-medium">{item.name}</span>
               </NavLink>
             );
           }
 
-          // Items with custom action (Search, More)
-          if (item.action) {
+          // Buttons with action only (Search, More)
+          if (item.onClick && !item.to) {
             return (
               <button
                 key={index}
-                onClick={item.action}
+                onClick={item.onClick}
                 className={`${baseLink} ${inactiveStyle} text-left`}
               >
                 <item.icon
@@ -294,36 +96,22 @@ export const DesktopSidebar = () => {
             );
           }
 
-          // Special case → Messages & Notification (no active style)
-          if (isSpecial) {
-            return (
-              <NavLink
-                key={index}
-                to={item.to}
-                className={`${baseLink} ${inactiveStyle}`}
-              >
-                <item.icon
-                  size={25}
-                  className="group-hover:scale-110 transition-transform"
-                />
-                <span className="font-medium">{item.name}</span>
-              </NavLink>
-            );
-          }
-
-          // Normal NavLink Items
+          // Normal NavLinks (Home, Create, Messages, Notification)
           return (
             <NavLink
               key={index}
               to={item.to}
+              onClick={item.onClick}
               className={({ isActive }) =>
                 `${baseLink} ${isActive ? activeStyle : inactiveStyle}`
               }
             >
-              <item.icon
-                size={25}
-                className="group-hover:scale-110 transition-transform"
-              />
+              {item.icon && (
+                <item.icon
+                  size={25}
+                  className="group-hover:scale-110 transition-transform"
+                />
+              )}
               <span className="font-medium">{item.name}</span>
             </NavLink>
           );

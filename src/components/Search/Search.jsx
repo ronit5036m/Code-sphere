@@ -6,6 +6,8 @@ import Logo from "../../assets/logo";
 import { Link } from "react-router-dom";
 import { ArrowUpLeft } from "lucide-react";
 
+import Loader from "../../assets/loader";
+
 export default function SearchBar() {
   const { isSearch, setIsSearch } = useContext(SearchContext);
   const [query, setQuery] = useState("");
@@ -73,13 +75,7 @@ p-3 rounded outline-none"
         <div className="mt-3">
           {loading && (
             <div className="flex justify-center p-4">
-              <img
-                src={Logo.loading}
-                className="opacity-90"
-                alt="Loading"
-                height={100}
-                width={100}
-              />
+              <Loader />
             </div>
           )}
           {!loading && results.length > 0 ? (
