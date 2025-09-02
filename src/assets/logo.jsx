@@ -1,4 +1,4 @@
-import loading from "./loading.gif";
+import loading from "./loader-feed.svg";
 import defaultUser from "./defaultUser.png";
 import ronit from "./ronit.png";
 import arya from "./arya.png";

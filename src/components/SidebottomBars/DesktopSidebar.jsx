@@ -195,15 +195,25 @@ import { Search, Heart, PlusSquare, Menu, Send, House } from "lucide-react";
 import Logo from "../../assets/logo";
 import MoreMenu from "../MoreComponent/More";
 import Footer from "../Footer/Footer";
+import { usePosts } from "../../Context/PostContext";
 
 export const DesktopSidebar = () => {
   const [isMoreClicked, setIsMoreClicked] = useState(false);
   const { CurrentUser } = useAuth();
   const { isSearch, setIsSearch } = useContext(SearchContext);
+  const { fetchPosts } = usePosts();
+
+  const scrollTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+    fetchPosts();
+  };
 
   // Sidebar Menu Items
   const menuItems = [
-    { name: "Home", icon: House, to: "/" },
+    { name: "Home", icon: House, to: "/", action: scrollTop },
     {
       name: "Search",
       icon: Search,

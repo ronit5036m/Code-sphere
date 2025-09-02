@@ -1,3 +1,4 @@
+import Loader from "../../assets/loader";
 import Logo from "../../assets/logo";
 import { usePosts } from "../../Context/PostContext";
 import { useMedia } from "../../Context/ResponsiveContext";
@@ -11,7 +12,7 @@ export default function PostFeed() {
   return (
     <div className={`flex flex-col gap-6 items-center w-2xl mx-1`}>
       {loading ? (
-        <img src={Logo.loading} className="h-20 w-20 flex" />
+        <Loader className="h-15 w-15" />
       ) : posts?.length === 0 ? (
         <div>No posts are available</div>
       ) : (

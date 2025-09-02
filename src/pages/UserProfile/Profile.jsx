@@ -14,10 +14,10 @@ import Footer from "../../components/Footer/Footer";
 const ProfilePage = () => {
   const { id } = useParams();
   const isMobileSize = useMedia();
-  const { CurrentUser, authToken } = useAuth();
+  const { CurrentUser, authToken, setLoadingProjects } = useAuth();
   const { profile, setProfile } = usePosts();
   const [loading, setLoading] = useState(true);
-  const [loadingProjects, setLoadingProjects] = useState(true);
+  // const [loadingProjects, setLoadingProjects] = useState(true);
   const [projects, setProjects] = useState([]);
   const [error, setError] = useState("");
 
@@ -34,24 +34,25 @@ const ProfilePage = () => {
           fetchProjects(res?.data?.projects);
         } else {
           setProjects([]); // No projects
-          setLoadingProjects(false);
         }
         setProfile(res.data);
       } catch (err) {
         console.clear();
         setError(err);
-        setLoadingProjects(false);
       } finally {
         setLoading(false);
-        setLoadingProjects(false);
       }
     };
 
     const fetchProjects = async (projectIds) => {
       const projectPromises = projectIds.map((id) =>
-        axiosInstance.get(`/api/project/${id}`, {
-          headers: { Authorization: `Bearer ${authToken}` },
-        })
+        axiosInstance
+          .get(`/api/project/${id}`, {
+            headers: { Authorization: `Bearer ${authToken}` },
+          })
+          .finally(() => {
+            setLoadingProjects(false);
+          })
       );
 
       const responses = await Promise.all(projectPromises);

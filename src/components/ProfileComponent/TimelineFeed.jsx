@@ -1,8 +1,12 @@
+import { useAuth } from "../../Context/AuthContext";
 import { usePosts } from "../../Context/PostContext";
 import ProfileTimeLine from "./ProfileTimeLine";
+import Loader from "../../assets/loader";
 
 const TimelineFeed = ({ projects }) => {
   const { isCurrentUser } = usePosts();
+
+  const { loadingProjects, setLoadingProjects } = useAuth();
 
   const uniqueProjects = Array.from(
     new Map(
@@ -22,7 +26,9 @@ const TimelineFeed = ({ projects }) => {
 
   return (
     <div className="px-1">
-      {filteredProjects?.length === 0 ? (
+      {loadingProjects ? (
+        <Loader className="w-full flex items-center justify-center text-center" />
+      ) : filteredProjects?.length === 0 ? (
         <div className="w-full flex items-center justify-center text-center">
           No Project yet
         </div>

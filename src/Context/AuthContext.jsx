@@ -12,6 +12,7 @@ export const AuthProvider = ({ children }) => {
   const authToken = localStorage.getItem("token");
   const [CurrentUser, setCurrentUser] = useState(null);
   const [error, setError] = useState("");
+  const [loadingProjects, setLoadingProjects] = useState(true);
 
   const fetchUser = async () => {
     if (!authToken) return;
@@ -66,6 +67,8 @@ export const AuthProvider = ({ children }) => {
         setLikes,
         fetchUser,
         CurrentUser,
+        loadingProjects,
+        setLoadingProjects,
       }}
     >
       {children}

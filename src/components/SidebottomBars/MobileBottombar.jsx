@@ -4,10 +4,20 @@ import { NavLink } from "react-router-dom";
 import { SearchContext } from "../../Context/SearchContext";
 import { useAuth } from "../../Context/AuthContext";
 import Logo from "../../assets/logo";
+import { usePosts } from "../../Context/PostContext";
 
 export default function MobileBottombar() {
   const { isSearch, setIsSearch } = useContext(SearchContext);
   const { CurrentUser } = useAuth();
+  const { fetchPosts } = usePosts();
+
+  const scrollTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+    fetchPosts();
+  };
 
   return (
     <nav
@@ -24,6 +34,7 @@ export default function MobileBottombar() {
               to="/"
               className={`w-full flex flex-col items-center gap-1 py-1.5 transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-500 rounded-md active:text-black active:dark:text-white text-neutral-500 dark:text-neutral-400
               `}
+              onClick={scrollTop}
             >
               <Home
                 size={25}
