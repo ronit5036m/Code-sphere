@@ -16,6 +16,7 @@ import About from "./pages/About/About";
 import EditProfile from "./pages/Edit/EditProfile";
 import CreateProject from "./pages/CreateProject/CreateProject";
 import "./App.css";
+import AppLoading from "./components/Loading/Loading";
 
 const App = () => {
   const { isSearch } = useContext(SearchContext);

@@ -10,7 +10,7 @@ const TimelineFeed = ({ projects }) => {
 
   // ✅ useMemo for derived filteredProjects
   const filteredProjects = useMemo(() => {
-    if (!projects) return [];
+    if (!projects || projects.length === 0) return [];
 
     const uniqueProjects = Array.from(
       new Map(
@@ -29,9 +29,11 @@ const TimelineFeed = ({ projects }) => {
     );
   }, [projects, isCurrentUser]);
 
+  const isLoading = loadingProjects || !projects; // ✅ loader until data exists
+
   return (
     <div className="px-1">
-      {loadingProjects ? (
+      {isLoading ? (
         <div className="w-full flex items-center justify-center text-center">
           <Loader />
         </div>

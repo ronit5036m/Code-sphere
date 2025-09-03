@@ -17,7 +17,6 @@ const ProfilePage = () => {
   const { CurrentUser, authToken, setLoadingProjects } = useAuth();
   const { profile, setProfile } = usePosts();
   const [loading, setLoading] = useState(true);
-  // const [loadingProjects, setLoadingProjects] = useState(true);
   const [projects, setProjects] = useState([]);
   const [error, setError] = useState("");
 
@@ -28,13 +27,13 @@ const ProfilePage = () => {
         const res = await axiosInstance.get(`/api/user/${id}`, {
           headers: { Authorization: `Bearer ${authToken}` },
         });
-        setLoading(false);
 
         if (res?.data?.projects?.length > 0) {
-          fetchProjects(res?.data?.projects);
+          await fetchProjects(res?.data?.projects);
         } else {
           setProjects([]); // No projects
         }
+
         setProfile(res.data);
       } catch (err) {
         console.clear();
@@ -45,22 +44,25 @@ const ProfilePage = () => {
     };
 
     const fetchProjects = async (projectIds) => {
-      const projectPromises = projectIds.map((id) =>
-        axiosInstance
-          .get(`/api/project/${id}`, {
+      try {
+        setLoadingProjects(true); // ✅ start projects loading
+        const projectPromises = projectIds.map((id) =>
+          axiosInstance.get(`/api/project/${id}`, {
             headers: { Authorization: `Bearer ${authToken}` },
           })
-          .finally(() => {
-            setLoadingProjects(false);
-          })
-      );
+        );
 
-      const responses = await Promise.all(projectPromises);
-      setProjects(responses?.map((res) => res?.data));
+        const responses = await Promise.all(projectPromises);
+        setProjects(responses?.map((res) => res?.data));
+      } catch (err) {
+        setError(err);
+      } finally {
+        setLoadingProjects(false); // ✅ only once after all fetched
+      }
     };
 
     fetchProfile();
-  }, [id]);
+  }, [id, authToken]);
 
   if (loading) return <AppLoading />;
   if (!profile)
