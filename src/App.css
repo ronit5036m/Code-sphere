@@ -17,22 +17,19 @@
 /* styles.css */
 .swiper-button-next,
 .swiper-button-prev {
-  color: white; /* arrow color */
-  background: rgba(0, 0, 0, 0.5);
+  height: 15px;
+  width: 15px;
+  color: #000000; /* arrow color */
+  background: rgba(230, 230, 230, 0.829);
   padding: 16px;
-  border-radius: 9999px; /* fully round */
+  border-radius: 50%; /*fully round*/
   transition: background 0.2s;
-}
-
-.swiper-button-next:hover,
-.swiper-button-prev:hover {
-  background: rgba(0, 0, 0, 0.7);
 }
 
 .swiper-button-next::after,
 .swiper-button-prev::after {
-  font-size: 18px; /* arrow size */
-  font-weight: bold;
+  font-size: 12px; /* arrow size */
+  font-weight: bolder;
 }
 
 body {

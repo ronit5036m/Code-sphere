@@ -55,10 +55,11 @@ const ProfileComponent = ({ profile, isCurrentUser, projects }) => {
           />
         </nav>
       )}
+      {/* bg-gradient-to-l from-pink-600 via-red-500 to-orange-400 */}
       <div className={`bg-black ${isMobileSize ? "py-5 px-5" : "py-10"}`}>
         <div className="flex justify-between items-center">
           <div className="flex items-center space-x-4 ">
-            <div className="w-25 h-25 rounded-full shadow-md overflow-hidden bg-gradient-to-l from-pink-600 via-red-500 to-orange-400 p-1">
+            <div className="w-25 h-25 rounded-full shadow-md overflow-hidden p-1">
               <img
                 src={profile?.avatar || Logo.defaultUser}
                 alt="Profile"
@@ -104,7 +105,6 @@ const ProfileComponent = ({ profile, isCurrentUser, projects }) => {
           </div>
         </div>
       </div>
-
       {/* Profile Info */}
       <div className="px-5">
         <div className="flex justify-between m-5">
@@ -127,7 +127,6 @@ const ProfileComponent = ({ profile, isCurrentUser, projects }) => {
             <p className="text-gray-500">following</p>
           </div>
         </div>
-
         <div className="mb-6">
           <h2 className="text-xl font-bold text-neutral-300 mb-1">
             @{profile?.username}
@@ -175,23 +174,23 @@ const ProfileComponent = ({ profile, isCurrentUser, projects }) => {
             )}
           </div>
         </div>
-
+        {/* bg-gradient-to-l from-pink-600 via-red-500 to-orange-400 */}
         <div>
           {isCurrentUser ? (
             <div className="flex space-x-4 mb-6">
               <button
                 onClick={() => navigate(`/edit-profile`)}
-                className="flex-1 bg-gradient-to-l from-pink-600 via-red-500 to-orange-400 p-1 text-white py-2 px-4 rounded-lg font-medium hover:opacity-90 transition text-center cursor-pointer"
+                className="flex-1 bg-white p-1 text-black py-2 px-4 rounded-lg font-bold hover:bg-white/85 transition text-center cursor-pointer"
               >
                 Edit profile
               </button>
-              <button className="flex-1 bg-gray-100 text-gray-800 py-2 px-4 rounded-lg font-medium hover:bg-gray-200 transition text-center">
+              <button className="flex-1 bg-neutral-700 text-white py-2 px-4 rounded-lg font-medium hover:bg-neutral-800 transition text-center">
                 View archive
               </button>
             </div>
           ) : (
             <div className="flex space-x-4 mb-6">
-              <button className="flex-1 bg-gradient-to-l from-pink-600 via-red-500 to-orange-400 p-1 text-white py-2 px-4 rounded-lg font-medium hover:opacity-90 transition">
+              <button className="flex-1 bg-white p-1 text-black py-2 px-4 rounded-lg font-bold hover:opacity-90 transition">
                 Follow
               </button>
             </div>

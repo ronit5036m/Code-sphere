@@ -2,7 +2,15 @@ import { useState, useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { SearchContext } from "../../Context/SearchContext";
 import { useAuth } from "../../Context/AuthContext";
-import { Search, Heart, PlusSquare, Menu, Send, House } from "lucide-react";
+import {
+  Search,
+  Heart,
+  PlusSquare,
+  Menu,
+  Send,
+  House,
+  UserRound,
+} from "lucide-react";
 import Logo from "../../assets/logo";
 import MoreMenu from "../MoreComponent/More";
 import Footer from "../Footer/Footer";
@@ -26,6 +34,7 @@ export const DesktopSidebar = () => {
     { name: "Messages", icon: Send, to: "#" },
     { name: "Notification", icon: Heart, to: "#" },
     { name: "Create", icon: PlusSquare, to: "/create-projects" },
+    { name: "About", icon: UserRound, to: "/about" },
     {
       name: "Profile",
       to: `/profile/${CurrentUser?.existuser?._id}`,

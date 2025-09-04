@@ -65,8 +65,7 @@ export default function SearchBar() {
         <input
           type="text"
           placeholder="Search..."
-          className="w-full bg-[#111] text-white border-[3px] border-transparent 
-[border-image:linear-gradient(to_left,#db2777,#ef4444,#f97316)_1] 
+          className="w-full text-white border-[3px] border-transparent bg-white
 p-3 rounded outline-none"
           value={query}
           onChange={(e) => setQuery(e.target.value)}

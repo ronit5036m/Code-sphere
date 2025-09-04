@@ -180,12 +180,12 @@ const CreateProjectComponent = () => {
               onClick={handleToggle}
               className={`w-15 h-7 flex items-center rounded-full transition ${
                 formData.isGlobalPost
-                  ? "bg-gradient-to-tr from-pink-600 via-red-500 to-orange-400"
+                  ? "bg-cyan-50"
                   : "bg-neutral-600"
               }`}
             >
               <div
-                className={`w-5 h-5 bg-white rounded-full transform transition ${
+                className={`w-5 h-5 bg-neutral-900 rounded-full transform transition ${
                   formData.isGlobalPost ? "translate-x-7" : "translate-x-1"
                 }`}
               />
@@ -231,7 +231,7 @@ const CreateProjectComponent = () => {
           {/* Submit Button */}
           <button
             type="submit"
-            className={`w-full p-3 bg-gradient-to-l from-pink-600 via-red-500 to-orange-400 rounded-lg font-semibold ${
+            className={`font-bold w-full p-3 bg-white rounded-lg text-black ${
               loading ? "opacity-60" : "hover:opacity-90"
             }`}
             disabled={loading}

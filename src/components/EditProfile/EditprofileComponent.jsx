@@ -218,7 +218,7 @@ const EditprofileComponent = () => {
           {/* Submit Button */}
           <button
             type="submit"
-            className={`w-full p-3 bg-gradient-to-l from-pink-600 via-red-500 to-orange-400 rounded-lg transition font-semibold ${
+            className={`text-black font-bold w-full p-3 bg-white rounded-lg transition ${
               loading ? "opacity-60" : "opacity-100"
             }`}
             disabled={loading}

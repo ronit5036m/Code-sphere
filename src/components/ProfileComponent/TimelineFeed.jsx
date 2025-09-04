@@ -8,7 +8,7 @@ const TimelineFeed = ({ projects }) => {
   const { isCurrentUser } = usePosts();
   const { loadingProjects } = useAuth();
 
-  // ✅ useMemo for derived filteredProjects
+  //  useMemo for derived filteredProjects
   const filteredProjects = useMemo(() => {
     if (!projects || projects.length === 0) return [];
 
@@ -29,7 +29,7 @@ const TimelineFeed = ({ projects }) => {
     );
   }, [projects, isCurrentUser]);
 
-  const isLoading = loadingProjects || !projects; // ✅ loader until data exists
+  const isLoading = loadingProjects || !projects; // loader until data exists
 
   return (
     <div className="px-1">

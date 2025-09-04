@@ -99,9 +99,8 @@ export default function PostCard({ post }) {
           <Swiper
             pagination={{
               clickable: true,
-              bulletClass: "swiper-pagination-bullet !bg-netural-900",
-              bulletActiveClass:
-                "swiper-pagination-bullet-active !bg-gradient-to-tl from-pink-600 via-red-500 to-orange-400 bg-clip-text text-transparent",
+              bulletClass: "swiper-pagination-bullet !bg-neutral-200",
+              bulletActiveClass: "swiper-pagination-bullet-active !bg-white",
             }}
             navigation={true}
             modules={[Pagination, Navigation]}
