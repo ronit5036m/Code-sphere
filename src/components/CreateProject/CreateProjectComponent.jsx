@@ -179,13 +179,11 @@ const CreateProjectComponent = () => {
               type="button"
               onClick={handleToggle}
               className={`w-15 h-7 flex items-center rounded-full transition ${
-                formData.isGlobalPost
-                  ? "bg-cyan-50"
-                  : "bg-neutral-600"
+                formData.isGlobalPost ? "bg-green-400" : "bg-neutral-600"
               }`}
             >
               <div
-                className={`w-5 h-5 bg-neutral-900 rounded-full transform transition ${
+                className={`w-5 h-5 rounded-full transform transition bg-white ${
                   formData.isGlobalPost ? "translate-x-7" : "translate-x-1"
                 }`}
               />
