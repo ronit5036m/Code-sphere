@@ -45,7 +45,7 @@ const ProfilePage = () => {
 
     const fetchProjects = async (projectIds) => {
       try {
-        setLoadingProjects(true); // ✅ start projects loading
+        setLoadingProjects(true); //  start projects loading
         const projectPromises = projectIds.map((id) =>
           axiosInstance.get(`/api/project/${id}`, {
             headers: { Authorization: `Bearer ${authToken}` },
@@ -57,7 +57,7 @@ const ProfilePage = () => {
       } catch (err) {
         setError(err);
       } finally {
-        setLoadingProjects(false); // ✅ only once after all fetched
+        setLoadingProjects(false); //  only once after all fetched
       }
     };
 

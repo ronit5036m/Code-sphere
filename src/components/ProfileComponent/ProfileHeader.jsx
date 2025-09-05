@@ -14,19 +14,52 @@ import { useAuth } from "../../Context/AuthContext";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import TimelineFeed from "./TimelineFeed";
+import axiosInstance from "../../api/axiosInstance";
 
 const ProfileComponent = ({ profile, isCurrentUser, projects }) => {
-  const { logout } = useAuth();
+  const { logout, authToken } = useAuth();
   const navigate = useNavigate();
   const isMobileSize = useMedia();
   const [isElipsDialogOpen, setIsElipsDialogOpen] = useState(false);
+  const [isFollowing, setIsFollowing] = useState(profile?.isFollowing);
   const menuRef = useRef(null);
+
+  const [countFollowers, setCountFollowers] = useState(
+    profile?.followers.length || 0
+  );
+
+  const [countFollowing, setCountFollowing] = useState(
+    profile?.following.length || 0
+  );
 
   const handleLogout = async () => {
     await logout();
     toast.success("Logout successfully");
     window.location.reload();
     navigate("/login");
+  };
+
+  const handleFollowing = () => {
+    setIsFollowing((prev) => !prev);
+    axiosInstance
+      .post(
+        `/api/${profile?._id}/follow`,
+        {},
+        {
+          headers: { Authorization: `Bearer ${authToken}` },
+        }
+      )
+      .then(() => {
+        toast.success(
+          !isFollowing
+            ? `You started Following ${profile?.name}`
+            : `You Unfollowed ${profile?.name}`
+        );
+      })
+      .catch(() => {
+        setIsFollowing((prev) => !prev);
+        toast.error("Something went wrong while Following !!");
+      });
   };
 
   // Close dropdown when clicking outside
@@ -116,13 +149,15 @@ const ProfileComponent = ({ profile, isCurrentUser, projects }) => {
           </div>
           <div className="text-center cursor-pointer">
             <p className="text-2xl font-bold">
-              {profile?.followers?.length || 0}
+              {/* {profile?.followers?.length || 0} */}
+              {countFollowers}
             </p>
             <p className="text-gray-500">followers</p>
           </div>
           <div className="text-center cursor-pointer">
             <p className="text-2xl font-bold">
-              {profile?.following?.length || 0}
+              {/* {profile?.following?.length || 0} */}
+              {countFollowing}
             </p>
             <p className="text-gray-500">following</p>
           </div>
@@ -190,8 +225,15 @@ const ProfileComponent = ({ profile, isCurrentUser, projects }) => {
             </div>
           ) : (
             <div className="flex space-x-4 mb-6">
-              <button className="flex-1 bg-white p-1 text-black py-2 px-4 rounded-lg font-bold hover:opacity-90 transition">
-                Follow
+              <button
+                className={`flex-1 py-2 p-1 px-4 rounded-lg font-bold hover:opacity-90 transition ${
+                  isFollowing
+                    ? "bg-neutral-800 text-white"
+                    : "bg-white text-black"
+                }`}
+                onClick={handleFollowing}
+              >
+                {isFollowing ? "Following" : "Follow"}
               </button>
             </div>
           )}

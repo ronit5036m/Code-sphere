@@ -13,7 +13,6 @@ import {
 } from "lucide-react";
 import Logo from "../../assets/logo";
 import MoreMenu from "../MoreComponent/More";
-import Footer from "../Footer/Footer";
 import { usePosts } from "../../Context/PostContext";
 
 export const DesktopSidebar = () => {
@@ -31,8 +30,8 @@ export const DesktopSidebar = () => {
   const menuItems = [
     { name: "Home", icon: House, to: "/", onClick: scrollTop },
     { name: "Search", icon: Search, onClick: () => setIsSearch(!isSearch) },
-    { name: "Messages", icon: Send, to: "#" },
-    { name: "Notification", icon: Heart, to: "#" },
+    // { name: "Messages", icon: Send, to: "#" },
+    // { name: "Notification", icon: Heart, to: "#" },
     { name: "Create", icon: PlusSquare, to: "/create-projects" },
     { name: "About", icon: UserRound, to: "/about" },
     {
@@ -81,7 +80,7 @@ export const DesktopSidebar = () => {
                 <img
                   src={item.avatar}
                   alt="profile"
-                  className="h-9 w-9 rounded-full object-cover border border-neutral-700 group-hover:scale-110 transition-transform"
+                  className={`h-9 w-9 rounded-full object-cover border border-neutral-700 group-hover:scale-110 transition-transform`}
                 />
                 <span className="font-medium">{item.name}</span>
               </NavLink>
@@ -126,11 +125,8 @@ export const DesktopSidebar = () => {
           );
         })}
       </nav>
-
-      {/* Footer */}
-      <div className="mt-auto w-full flex justify-center items-center p-4 border-t border-neutral-900">
-        <Footer />
-      </div>
     </aside>
   );
 };
+
+// GoHome

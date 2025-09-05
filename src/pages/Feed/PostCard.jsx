@@ -19,29 +19,9 @@ import Logo from "../../assets/logo";
 export default function PostCard({ post }) {
   const { toggleLike } = usePosts();
   const { CurrentUser } = useAuth();
-  const [showModal, setShowModal] = useState(false);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const likedByUser = post?.likes?.includes(CurrentUser?.existuser?._id);
 
   const isMobileSize = useMedia();
-
-  const openModal = (index) => {
-    setCurrentImageIndex(index);
-    setShowModal(true);
-  };
-
-  const nextImage = () => {
-    setCurrentImageIndex((prev) =>
-      prev === post?.images?.length - 1 ? 0 : prev + 1
-    );
-  };
-
-  const prevImage = () => {
-    setCurrentImageIndex((prev) =>
-      prev === 0 ? post?.images?.length - 1 : prev - 1
-    );
-  };
-
   return (
     <div className="bg-black border-b-neutral-900 rounded-xl shadow-md max-w-md w-full mx-auto">
       {/* Header */}
@@ -69,28 +49,35 @@ export default function PostCard({ post }) {
         </Link>
       </div>
       {/* Images Grid */}
-      {isMobileSize && post?.images?.length > 0 && (
-        <div
-          className={`grid ${
-            post.images.length === 1
-              ? "grid-cols-1"
-              : post.images.length === 2
-              ? "grid-cols-2"
-              : "grid-cols-2"
-          } gap-1`}
-        >
-          {post?.images?.map((img, idx) => (
-            <img
-              key={idx}
-              src={img}
-              alt={`Post ${idx + 1}`}
-              className="w-full h-64 object-cover cursor-pointer hover:opacity-75 transition"
-              onClick={() => openModal(idx)}
-              loading="lazy"
-            />
-          ))}
-        </div>
-      )}
+      <div className="max-md:w-90 md:w-100 mx-auto">
+        {isMobileSize && post?.images?.length > 0 && (
+          <Swiper
+            modules={[Navigation, Pagination]}
+            spaceBetween={10}
+            slidesPerView={1}
+            navigation
+            pagination={{
+              clickable: true,
+              bulletClass: "swiper-pagination-bullet !bg-neutral-200",
+              bulletActiveClass: "swiper-pagination-bullet-active !bg-white",
+            }}
+            className="rounded-xl shadow-md"
+          >
+            {post?.images?.map((img, idx) => (
+              <SwiperSlide key={idx}>
+                <div className="relative group overflow-hidden rounded-xl">
+                  <img
+                    src={img}
+                    alt={`Post ${idx + 1}`}
+                    className="w-full aspect-square max-h-[500px] object-cover"
+                    loading="lazy"
+                  />
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        )}
+      </div>
 
       {/* Image Swiper */}
 
@@ -174,39 +161,7 @@ export default function PostCard({ post }) {
           </a>
         )}
       </div>
-      {/* Image Modal */}
-      {showModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-999">
-          {/* Close Button */}
-          <button
-            className="absolute top-4 right-4 text-white"
-            onClick={() => setShowModal(false)}
-          >
-            <X size={32} />
-          </button>
 
-          {/* Prev Button */}
-          {post?.images?.length > 1 && (
-            <button className="absolute left-4 text-white" onClick={prevImage}>
-              <ChevronLeft size={40} />
-            </button>
-          )}
-
-          {/* Current Image */}
-          <img
-            src={post?.images[currentImageIndex]}
-            alt="Preview"
-            className="max-h-[90vh] max-w-[90vw] object-contain"
-          />
-
-          {/* Next Button */}
-          {post?.images?.length > 1 && (
-            <button className="absolute right-4 text-white" onClick={nextImage}>
-              <ChevronRight size={40} />
-            </button>
-          )}
-        </div>
-      )}
       {/* Horizontal Ruler For defining the Post end */}
       <div className="w-full border-b-2 border-neutral-900"></div>
     </div>

@@ -65,7 +65,7 @@ export default function SearchBar() {
         <input
           type="text"
           placeholder="Search..."
-          className="w-full text-white border-[3px] border-transparent bg-white
+          className="w-full text-white border-3 border-white bg-neutral-900
 p-3 rounded outline-none"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
