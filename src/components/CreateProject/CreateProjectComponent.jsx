@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axiosInstance from "../../api/axiosInstance"; // adjust path
 import { useAuth } from "../../Context/AuthContext";
 import { useMedia } from "../../Context/ResponsiveContext";
-import { ArrowLeft, X } from "lucide-react";
+import { ArrowLeft, Plus, X } from "lucide-react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
@@ -138,8 +138,11 @@ const CreateProjectComponent = () => {
             placeholder="Project Title"
             value={formData.title}
             onChange={handleChange}
-            className="w-full p-3 rounded-lg bg-neutral-800 text-white placeholder-neutral-400 outline-none focus:ring-2 focus:ring-blue-500"
+            className={`w-full p-3 rounded-lg bg-neutral-800 text-white placeholder-neutral-400 outline-none focus:ring-2 focus:ring-blue-500 ${
+              loading && "opacity-60"
+            }`}
             required
+            disabled={loading}
           />
 
           {/* Description */}
@@ -148,8 +151,11 @@ const CreateProjectComponent = () => {
             placeholder="Project Description"
             value={formData.description}
             onChange={handleChange}
-            className="w-full p-3 rounded-lg bg-neutral-800 text-white placeholder-neutral-400 outline-none focus:ring-2 focus:ring-blue-500 h-28 resize-none"
+            className={`w-full p-3 rounded-lg bg-neutral-800 text-white placeholder-neutral-400 outline-none focus:ring-2 focus:ring-blue-500 h-28 resize-none ${
+              loading && "opacity-60"
+            }`}
             required
+            disabled={loading}
           />
 
           {/* Tech Stack */}
@@ -159,7 +165,10 @@ const CreateProjectComponent = () => {
             placeholder="Tech Stack (comma separated)"
             value={formData.techStack}
             onChange={handleChange}
-            className="w-full p-3 rounded-lg bg-neutral-800 text-white placeholder-neutral-400 outline-none focus:ring-2 focus:ring-green-500"
+            className={`w-full p-3 rounded-lg bg-neutral-800 text-white placeholder-neutral-400 outline-none focus:ring-2 focus:ring-green-500 ${
+              loading && "opacity-60"
+            }`}
+            disabled={loading}
           />
 
           {/* Project Link */}
@@ -169,15 +178,19 @@ const CreateProjectComponent = () => {
             placeholder="Project Link (GitHub/Live)"
             value={formData.projectLink}
             onChange={handleChange}
-            className="w-full p-3 rounded-lg bg-neutral-800 text-white placeholder-neutral-400 outline-none focus:ring-2 focus:ring-purple-500"
+            className={`w-full p-3 rounded-lg bg-neutral-800 text-white placeholder-neutral-400 outline-none focus:ring-2 focus:ring-purple-500 ${
+              loading && "opacity-60"
+            }`}
+            disabled={loading}
           />
 
           {/* Global Post Toggle */}
           <div className="flex items-center justify-between bg-neutral-800 p-3 rounded-lg">
-            <span>Global Post</span>
+            <span className={`${loading && "opacity-60"}`}>Global Post</span>
             <button
               type="button"
               onClick={handleToggle}
+              disabled={loading}
               className={`w-15 h-7 flex items-center rounded-full transition ${
                 formData.isGlobalPost ? "bg-green-400" : "bg-neutral-600"
               }`}
@@ -195,35 +208,55 @@ const CreateProjectComponent = () => {
             <label className="block mb-2 text-sm">
               Upload Project Images (max 5)
             </label>
+
+            {/* Hidden file input */}
             <input
               type="file"
               accept="image/*"
               multiple
               onChange={handleImageChange}
-              className="w-full text-sm text-gray-400"
+              className="hidden"
+              id="imageUpload"
+              disabled={loading}
             />
 
-            {/* Preview */}
-            {formData.images.length > 0 && (
-              <div className="mt-4 grid grid-cols-3 gap-3">
-                {formData.images.map((img, i) => (
-                  <div key={i} className="relative group">
-                    <img
-                      src={URL.createObjectURL(img)}
-                      alt="preview"
-                      className="w-full h-24 object-cover rounded-lg border border-gray-700"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => removeImage(i)}
-                      className="absolute top-1 right-1 bg-red-600 text-xs px-2 py-1 rounded-md opacity-80 group-hover:opacity-100"
-                    >
-                      <X />
-                    </button>
-                  </div>
-                ))}
-              </div>
-            )}
+            {/* Plus icon trigger */}
+            <div className="flex flex-wrap gap-3">
+              {/* Preview of selected images */}
+              {formData.images.map((img, i) => (
+                <div key={i} className="relative group w-24 h-24">
+                  <img
+                    src={URL.createObjectURL(img)}
+                    alt="preview"
+                    className={`w-full h-full object-cover rounded-lg border border-gray-700 ${
+                      loading && "opacity-60"
+                    }`}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => removeImage(i)}
+                    disabled={loading}
+                    className={`absolute top-1 right-1 bg-red-600 text-xs p-1 rounded-md opacity-80 group-hover:opacity-100 ${
+                      loading && "opacity-60"
+                    }`}
+                  >
+                    <X size={16} />
+                  </button>
+                </div>
+              ))}
+
+              {/* Add new image button */}
+              {formData.images.length < 5 && (
+                <label
+                  htmlFor="imageUpload"
+                  className="w-24 h-24 flex items-center justify-center border-2 border-dashed border-gray-600 rounded-lg cursor-pointer hover:bg-neutral-800 transition"
+                >
+                  <span className="text-gray-400 text-3xl font-bold flex justify-center items-center">
+                    <Plus />
+                  </span>
+                </label>
+              )}
+            </div>
           </div>
 
           {/* Submit Button */}

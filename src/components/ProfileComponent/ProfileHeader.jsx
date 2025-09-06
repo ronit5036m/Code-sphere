@@ -52,8 +52,8 @@ const ProfileComponent = ({ profile, isCurrentUser, projects }) => {
       .then(() => {
         toast.success(
           !isFollowing
-            ? `You started Following ${profile?.name}`
-            : `You Unfollowed ${profile?.name}`
+            ? `You started following ${profile?.name}`
+            : `You unfollow ${profile?.name}`
         );
       })
       .catch(() => {
@@ -91,17 +91,22 @@ const ProfileComponent = ({ profile, isCurrentUser, projects }) => {
       {/* bg-gradient-to-l from-pink-600 via-red-500 to-orange-400 */}
       <div className={`bg-black ${isMobileSize ? "py-5 px-5" : "py-10"}`}>
         <div className="flex justify-between items-center">
-          <div className="flex items-center space-x-4 ">
-            <div className="w-25 h-25 rounded-full shadow-md overflow-hidden p-1">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+            {/* Profile Image */}
+            <div className="rounded-full shadow-lg overflow-hidden h-40 w-40">
               <img
                 src={profile?.avatar || Logo.defaultUser}
                 alt="Profile"
-                className="w-full h-full object-cover rounded-full"
+                className="h-full w-full object-cover rounded-full"
               />
             </div>
-            <div>
+
+            {/* Name + Username */}
+            <div className="text-left pl-2.5">
               <h1 className="text-3xl font-bold text-white">{profile?.name}</h1>
-              <p className="text-white opacity-90">@ Devloper</p>
+              <p className="text-white opacity-70 font-semibold text-lg">
+                @{profile?.username}
+              </p>
             </div>
           </div>
 
@@ -140,32 +145,29 @@ const ProfileComponent = ({ profile, isCurrentUser, projects }) => {
       </div>
       {/* Profile Info */}
       <div className="px-5">
-        <div className="flex justify-between m-5">
+        <div className="flex justify-between space-y-5 mx-4">
           <div className="text-center cursor-pointer">
             <p className="text-2xl font-bold">
               {profile?.projects?.length || 0}
             </p>
-            <p className="text-gray-500">posts</p>
+            <p className="text-white opacity-60">posts</p>
           </div>
           <div className="text-center cursor-pointer">
             <p className="text-2xl font-bold">
               {/* {profile?.followers?.length || 0} */}
               {countFollowers}
             </p>
-            <p className="text-gray-500">followers</p>
+            <p className="text-white opacity-60">followers</p>
           </div>
           <div className="text-center cursor-pointer">
             <p className="text-2xl font-bold">
               {/* {profile?.following?.length || 0} */}
               {countFollowing}
             </p>
-            <p className="text-gray-500">following</p>
+            <p className="text-white opacity-60">following</p>
           </div>
         </div>
         <div className="mb-6">
-          <h2 className="text-xl font-bold text-neutral-300 mb-1">
-            @{profile?.username}
-          </h2>
           {profile?.bio && (
             <p className="text-neutral-300 mb-2">{profile?.bio}</p>
           )}

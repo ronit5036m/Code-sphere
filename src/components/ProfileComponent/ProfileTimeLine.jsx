@@ -28,9 +28,24 @@ const ProfileTimeLine = ({ post }) => {
   const { isCurrentUser } = usePosts();
   const navigate = useNavigate();
   const isMobileSize = useMedia();
-  const images = post?.project?.images || post?.images || [];
   const [openThreeDotModel, setOpenThreeDotModel] = useState(false);
   const [isGlobal, setIsGlobal] = useState(post?.project?.isGlobalPost);
+  
+  // Image Showmodel
+  const images = post?.project?.images || post?.images || [];
+  const [selectedImageIndex, setSelectedImageIndex] = useState(null);
+  const closeModal = () => setSelectedImageIndex(null);
+  const showPrev = () =>
+    setSelectedImageIndex((prev) => (prev > 0 ? prev - 1 : images.length - 1));
+  const showNext = () =>
+    setSelectedImageIndex((prev) => (prev < images.length - 1 ? prev + 1 : 0));
+
+  // Turncated Text Description
+  const [isExpanded, setIsExpanded] = useState(false);
+  const shouldTruncate = post?.project?.description?.length > 30;
+  const displayText = isExpanded
+    ? post?.project?.description
+    : post?.project?.description?.substring(0, 30);
 
   const handleToggleVisibility = async () => {
     try {
@@ -52,12 +67,12 @@ const ProfileTimeLine = ({ post }) => {
   };
 
   useEffect(() => {
-    if (openThreeDotModel) {
+    if (openThreeDotModel || selectedImageIndex !== null) {
       document.body.style.overflowY = "hidden";
     } else {
       document.body.style.overflowY = "auto";
     }
-  }, [openThreeDotModel]);
+  }, [openThreeDotModel, selectedImageIndex]);
 
   const handleDeletePost = async () => {
     try {
@@ -79,35 +94,44 @@ const ProfileTimeLine = ({ post }) => {
     <div className="bg-black border-b-neutral-900 rounded-xl shadow-md max-w-md w-full mx-auto">
       {/* Header */}
       <div className="flex items-center justify-between mx-2">
-        <div className="flex items-center py-4">
+        {/* Profile section */}
+        <Link
+          to={`/profile/${post?.project?.user?._id}`}
+          className="flex items-center py-4"
+        >
           <img
             src={post?.project?.user?.avatar || Logo?.defaultUser}
             alt={post?.project?.user?.name}
             className="w-10 h-10 rounded-full border border-neutral-700 object-cover"
           />
-          <Link
-            to={`/profile/${post?.project?.user?._id}`}
-            className="ml-3 text-white font-semibold flex items-center"
-          >
-            {post?.project?.user?.name}
-            <p className="text-sm text-neutral-400 flex items-center">
-              <Dot />
-              {timeAgo(post?.project?.createdAt)}
-            </p>
-            <span
-              className="px-5 text-neutral-500"
-              title={isGlobal ? "Public" : "Private"}
-            >
-              {isGlobal ? (
-                <GiEarthAsiaOceania size={17} />
-              ) : (
-                <BiLock size={17} />
-              )}
+
+          <div className="ml-3 text-white font-semibold">
+            {/* Name */}
+            <span>
+              {post?.project?.user?.name?.length > 20
+                ? post?.project?.user?.name.substring(0, 20) + "..."
+                : post?.project?.user?.name}
             </span>
-          </Link>
-        </div>
+            <span className="flex items-center text-sm text-neutral-400 font-normal ml-2">
+              <span title={`${timeAgo(post?.project?.createdAt)} Ago`}>
+                {timeAgo(post?.project?.createdAt)}
+              </span>
+              <span
+                className="ml-2 text-neutral-500"
+                title={isGlobal ? "Public" : "Private"}
+              >
+                {isGlobal ? (
+                  <GiEarthAsiaOceania size={15} />
+                ) : (
+                  <BiLock size={15} />
+                )}
+              </span>
+            </span>
+          </div>
+        </Link>
+        {/* Menu */}
         <Ellipsis
-          className="cursor-pointer"
+          className="cursor-pointer ml-3"
           onClick={() => setOpenThreeDotModel(!openThreeDotModel)}
         />
       </div>
@@ -191,6 +215,7 @@ const ProfileTimeLine = ({ post }) => {
                   alt={`Post ${idx + 1}`}
                   className="w-full aspect-square max-h-[500px] object-cover"
                   loading="lazy"
+                  onClick={() => setSelectedImageIndex(idx)}
                 />
               </div>
             </SwiperSlide>
@@ -220,10 +245,61 @@ const ProfileTimeLine = ({ post }) => {
                   alt={`Post ${idx + 1}`}
                   className="w-full aspect-square max-h-[500px] object-cover rounded-lg"
                   loading="lazy"
+                  onClick={() => setSelectedImageIndex(idx)}
                 />
               </SwiperSlide>
             ))}
           </Swiper>
+        </div>
+      )}
+
+      {/* Image Showmodel */}
+
+      {selectedImageIndex !== null && (
+        <div
+          className="fixed inset-0 bg-black/90 flex items-center justify-center z-999"
+          onClick={closeModal}
+        >
+          <button
+            className="absolute top-5 right-5 text-white text-3xl"
+            onClick={closeModal}
+          >
+            <X size={30} />
+          </button>
+
+          {/* Prev Button */}
+          {images.length > 1 && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                showPrev();
+              }}
+              className="absolute left-5 text-neutral-300"
+            >
+              <ChevronLeft size={40} />
+            </button>
+          )}
+
+          {/* Image */}
+          <img
+            src={images[selectedImageIndex]}
+            alt="Full Preview"
+            className="max-h-[90%] max-w-[90%] rounded-lg object-contain"
+            onClick={(e) => e.stopPropagation()}
+          />
+
+          {/* Next Button */}
+          {images.length > 1 && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                showNext();
+              }}
+              className="absolute right-5 text-neutral-300"
+            >
+              <ChevronRight size={40} />
+            </button>
+          )}
         </div>
       )}
 
@@ -244,7 +320,18 @@ const ProfileTimeLine = ({ post }) => {
         <h2 className="mt-2 text-lg font-semibold text-white">
           {post?.project?.title}
         </h2>
-        <p className="text-neutral-300">{post?.project?.description}</p>
+        <p className="text-neutral-400">
+          {displayText}
+          {shouldTruncate && !isExpanded && "... "}
+          {shouldTruncate && (
+            <button
+              onClick={() => setIsExpanded(!isExpanded)}
+              className="text-blue-400 ml-1 hover:underline"
+            >
+              {isExpanded ? "less" : "more"}
+            </button>
+          )}
+        </p>
 
         {/* Tech Stack */}
         {post?.project?.techStack?.length > 0 && (

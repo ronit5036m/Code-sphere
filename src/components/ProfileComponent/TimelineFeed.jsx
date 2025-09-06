@@ -3,6 +3,7 @@ import { usePosts } from "../../Context/PostContext";
 import ProfileTimeLine from "./ProfileTimeLine";
 import Loader from "../../assets/loader";
 import { useMemo } from "react";
+import Logo from "../../assets/logo";
 
 const TimelineFeed = ({ projects }) => {
   const { isCurrentUser } = usePosts();
@@ -33,13 +34,15 @@ const TimelineFeed = ({ projects }) => {
 
   return (
     <div className="px-1">
-      {isLoading ? (
+      {isLoading && filteredProjects.length != 0 ? (
         <div className="w-full flex items-center justify-center text-center">
           <Loader />
         </div>
       ) : filteredProjects.length === 0 ? (
         <div className="w-full flex items-center justify-center text-center">
-          No Project yet
+          <p className="text-lg font-bold opacity-60">
+            No Projects Are Available
+          </p>
         </div>
       ) : (
         filteredProjects.map((post) => (

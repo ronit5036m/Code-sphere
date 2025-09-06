@@ -113,7 +113,9 @@ const EditprofileComponent = () => {
                       : URL.createObjectURL(formData.avatar)
                   }
                   alt="Preview"
-                  className="w-32 h-32 rounded-full object-cover hover:opacity-80 transition-opacity"
+                  className={`w-32 h-32 rounded-full object-cover hover:opacity-80 transition-opacity ${
+                    loading && "opacity-60"
+                  }`}
                 />
               ) : (
                 <span className="text-gray-400">
@@ -126,6 +128,7 @@ const EditprofileComponent = () => {
                 className="hidden"
                 accept="image/*"
                 onChange={handleChange}
+                disabled={loading}
               />
             </label>
           </div>
@@ -137,7 +140,10 @@ const EditprofileComponent = () => {
             placeholder="Full Name"
             value={formData.name}
             onChange={handleChange}
-            className="w-full p-3 rounded-lg bg-neutral-800 text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 outline-none"
+            disabled={loading}
+            className={`w-full p-3 rounded-lg bg-neutral-800 text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 outline-none ${
+              loading ? "opacity-60" : "opacity-100"
+            }`}
           />
 
           {/* Phone */}
@@ -147,7 +153,10 @@ const EditprofileComponent = () => {
             placeholder="Phone Number"
             value={formData.phone}
             onChange={handleChange}
-            className="w-full p-3 rounded-lg bg-neutral-800 text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 outline-none"
+            disabled={loading}
+            className={`w-full p-3 rounded-lg bg-neutral-800 text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 outline-none ${
+              loading ? "opacity-60" : "opacity-100"
+            }`}
           />
 
           {/* Address */}
@@ -157,7 +166,10 @@ const EditprofileComponent = () => {
             placeholder="Address"
             value={formData.address}
             onChange={handleChange}
-            className="w-full p-3 rounded-lg bg-neutral-800 text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 outline-none"
+            disabled={loading}
+            className={`w-full p-3 rounded-lg bg-neutral-800 text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 outline-none ${
+              loading ? "opacity-60" : "opacity-100"
+            }`}
           />
 
           {/* Bio */}
@@ -166,7 +178,10 @@ const EditprofileComponent = () => {
             placeholder="Write your bio..."
             value={formData.bio}
             onChange={handleChange}
-            className="w-full p-3 rounded-lg bg-neutral-800 text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 outline-none h-24 resize-none"
+            disabled={loading}
+            className={`w-full p-3 rounded-lg bg-neutral-800 text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 outline-none h-24 resize-none ${
+              loading ? "opacity-60" : "opacity-100"
+            }`}
           />
 
           {/* Social Links */}
@@ -177,7 +192,10 @@ const EditprofileComponent = () => {
               placeholder="GitHub"
               value={formData.github}
               onChange={handleChange}
-              className="w-full p-3 rounded-lg bg-neutral-800 text-white placeholder-gray-400 focus:ring-2 focus:ring-gray-500 outline-none"
+              disabled={loading}
+              className={`w-full p-3 rounded-lg bg-neutral-800 text-white placeholder-gray-400 focus:ring-2 focus:ring-gray-500 outline-none ${
+                loading ? "opacity-60" : "opacity-100"
+              }`}
             />
             <input
               type="text"
@@ -185,7 +203,10 @@ const EditprofileComponent = () => {
               placeholder="Twitter"
               value={formData.twitter}
               onChange={handleChange}
-              className="w-full p-3 rounded-lg bg-neutral-800 text-white placeholder-gray-400 focus:ring-2 focus:ring-sky-500 outline-none"
+              disabled={loading}
+              className={`w-full p-3 rounded-lg bg-neutral-800 text-white placeholder-gray-400 focus:ring-2 focus:ring-sky-500 outline-none ${
+                loading ? "opacity-60" : "opacity-100"
+              }`}
             />
             <input
               type="text"
@@ -193,7 +214,10 @@ const EditprofileComponent = () => {
               placeholder="Instagram"
               value={formData.instagram}
               onChange={handleChange}
-              className="w-full p-3 rounded-lg bg-neutral-800 text-white placeholder-gray-400 focus:ring-2 focus:ring-pink-500 outline-none"
+              disabled={loading}
+              className={`w-full p-3 rounded-lg bg-neutral-800 text-white placeholder-gray-400 focus:ring-2 focus:ring-pink-500 outline-none ${
+                loading ? "opacity-60" : "opacity-100"
+              }`}
             />
             <input
               type="text"
@@ -201,7 +225,10 @@ const EditprofileComponent = () => {
               placeholder="Facebook"
               value={formData.facebook}
               onChange={handleChange}
-              className="w-full p-3 rounded-lg bg-neutral-800 text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-600 outline-none"
+              disabled={loading}
+              className={`w-full p-3 rounded-lg bg-neutral-800 text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-600 outline-none ${
+                loading ? "opacity-60" : "opacity-100"
+              }`}
             />
           </div>
 
@@ -212,7 +239,10 @@ const EditprofileComponent = () => {
             placeholder="Skills (comma separated)"
             value={formData.skills}
             onChange={handleChange}
-            className="w-full p-3 rounded-lg bg-neutral-800 text-white placeholder-gray-400 focus:ring-2 focus:ring-green-500 outline-none"
+            disabled={loading}
+            className={`w-full p-3 rounded-lg bg-neutral-800 text-white placeholder-gray-400 focus:ring-2 focus:ring-green-500 outline-none ${
+              loading ? "opacity-60" : "opacity-100"
+            }`}
           />
 
           {/* Submit Button */}
